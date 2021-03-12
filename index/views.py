@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views import generic
 
 
-def index(request):
-    return HttpResponse("Hello CS3240! You are at the Exercise Gamification Index!")
-
+class IndexView(generic.TemplateView):
+    template_name = "index.html"
