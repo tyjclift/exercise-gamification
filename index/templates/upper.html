@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+
+<h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
+
+<div class="d-flex justify-content-center" style="min-height:77.5vh">
+    <form method="post">{% csrf_token %}
+        {{ form|crispy|cut:"*" }}
+        <input type="submit" value="Save">
+    </form>
+</div>

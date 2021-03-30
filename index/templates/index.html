@@ -2,11 +2,15 @@
 <html>
 
 <body>
-    <h1>Login</h1>
+    <h1>Welcome to WhateverOurAppIsCalled!</h1>
+
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.username }} </p>
+
+    <a href="{% url 'upper' %}">Record an Upper Body Workout!</a>
+
     {% else %}
-    <a href="{% provider_login_url 'google'  %}">Login With Google</a>
+    <a href="{% provider_login_url 'google' %}">Login With Google</a>
     {% endif %}
 </body>
 
