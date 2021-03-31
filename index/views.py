@@ -15,7 +15,7 @@ class CardioView(CreateView):
 
 class LowerBodyView(CreateView):
     model = LowerBody
-    fields = ['sqauts', 'lunges', 'calf_raises', 'leg_press', 'deadlifts']
+    fields = ['squats', 'lunges', 'calf_raises', 'leg_press', 'deadlifts']
     success_url = "index/"
 
 class UpperBodyView(CreateView):
