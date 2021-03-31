@@ -1,4 +1,8 @@
+{% extends "index.html" %}
+
 {% load crispy_forms_tags %}
+
+{% block content %}
 
 <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
 
@@ -8,3 +12,5 @@
         <input type="submit" value="Save">
     </form>
 </div>
+
+{% endblock content %}
