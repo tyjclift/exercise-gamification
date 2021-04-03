@@ -1,5 +1,9 @@
 from django.db import models
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import generic
+from django.views.generic.edit import CreateView
+from django import forms
 # Create your models here.
 
 class Cardio(models.Model):
@@ -16,8 +20,15 @@ class LowerBody(models.Model):
     deadlifts = models.CharField(max_length=4)
 
 class UpperBody(models.Model):
-    pushups = models.CharField(max_length=4)
-    pullups = models.CharField(max_length=4)
-    back_row = models.CharField(max_length=4)
-    bicep_curl = models.CharField(max_length=4)
-    tricep_extension = models.CharField(max_length=4)
+    # pushups = models.CharField(max_length=4)
+    # pullups = models.CharField(max_length=4)
+    # back_row = models.CharField(max_length=4)
+    # bicep_curl = models.CharField(max_length=4)
+    # tricep_extension = models.CharField(max_length=4)
+    reps = models.CharField(max_length=4, default='')
+    sets = models.CharField(max_length=4, default='')
+
+class UpperBodyForm(forms.ModelForm):
+    class Meta:
+        model = UpperBody
+        fields = ['sets','reps']
