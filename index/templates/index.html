@@ -40,6 +40,15 @@
             <a href="{% url 'lower' %}">Record an Lower Body Workout!</a>
         </div>
 
+        <div class="d-flex justify-content-center">
+        	{% for data in querey_list %}
+				<div class="list-group-item flex-column">
+					<h5 class="mb-1">Sets: {{ data.sets }}</h5>
+					<p class="mb-1">Reps: {{ data.reps }}</p>
+				</div>
+			{% endfor %}
+        </div>
+
         {% else %}
         <a href="{% provider_login_url 'google' %}">Login With Google</a>
         {% endif %}
