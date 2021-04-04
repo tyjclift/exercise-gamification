@@ -7,10 +7,17 @@ from django import forms
 # Create your models here.
 
 class Cardio(models.Model):
-    running = models.CharField(max_length=10)
-    biking = models.CharField(max_length=10)
-    swimming = models.CharField(max_length=10)
-    walking = models.CharField(max_length=10)
+    # running = models.CharField(max_length=10)
+    # biking = models.CharField(max_length=10)
+    # swimming = models.CharField(max_length=10)
+    # walking = models.CharField(max_length=10)
+    time = models.CharField(max_length=10, default='')
+    distance = models.CharField(max_length=10, default='')
+
+class CardioForm(forms.ModelForm):
+    class Meta:
+        model = Cardio
+        fields = ['time', 'distance']
 
 class LowerBody(models.Model):
     squats = models.CharField(max_length=4)
@@ -31,4 +38,4 @@ class UpperBody(models.Model):
 class UpperBodyForm(forms.ModelForm):
     class Meta:
         model = UpperBody
-        fields = ['sets','reps']
+        fields = ['reps','sets']
