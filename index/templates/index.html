@@ -35,9 +35,15 @@
         {% if user.is_authenticated %}
 
         <div class="d-flex justify-content-center">
-            <a href="{% url 'cardio' %}">Record a Cardio Workout!</a>
-            <a href="{% url 'upper' %}">Record an Upper Body Workout!</a>
-            <a href="{% url 'lower' %}">Record an Lower Body Workout!</a>
+            <form name="workoutselect">
+
+    <select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">
+        <option selected="{% url 'index' %}">Select One</option>
+        <option value="{% url 'cardio' %}">Cardio</option>
+        <option value="{% url 'upper' %}">Upper Body</option>
+        <option value="{% url 'lower' %}">Lower Body</option>
+    </select>
+</form>
         </div>
 
         {% else %}
