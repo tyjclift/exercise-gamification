@@ -35,20 +35,38 @@
         {% if user.is_authenticated %}
 
         <div class="d-flex justify-content-center">
-            <form name="workoutselect">
-
-    <select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">
+            <select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">
         <option selected="{% url 'index' %}">Select One</option>
         <option value="{% url 'cardio' %}">Cardio</option>
         <option value="{% url 'upper' %}">Upper Body</option>
         <option value="{% url 'lower' %}">Lower Body</option>
     </select>
-</form>
+        </div>
+
+        <div class="d-flex justify-content-center">
+        	{% for data in upper_querey_list %}
+				<div class="list-group-item flex-column">
+                    <p class="mb-1">Type: {{ data.type }}</p>
+					<h5 class="mb-1">Sets: {{ data.sets }}</h5>
+					<p class="mb-1">Reps: {{ data.reps }}</p>
+				</div>
+			{% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+        	{% for data in lower_querey_list %}
+				<div class="list-group-item flex-column">
+                    <p class="mb-1">Type: {{ data.type }}</p>
+					<h5 class="mb-1">Sets: {{ data.sets }}</h5>
+					<p class="mb-1">Reps: {{ data.reps }}</p>
+				</div>
+			{% endfor %}
         </div>
 
         {% else %}
         <a href="{% provider_login_url 'google' %}">Login With Google</a>
         {% endif %}
+
     </body>
 </div>
 
