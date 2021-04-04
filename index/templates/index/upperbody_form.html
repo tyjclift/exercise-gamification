@@ -6,11 +6,16 @@
 
 <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
 
-<div class="d-flex justify-content-center" style="min-height:77.5vh">
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+
+<!-- <div class="d-flex justify-content-center" style="min-height:77.5vh">
     <form method="post">{% csrf_token %}
         {{ form|crispy|cut:"*" }}
         <input type="submit" value="Save">
     </form>
 </div>
-
+ -->
 {% endblock content %}
