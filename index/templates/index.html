@@ -39,6 +39,11 @@
             <a href="{% url 'upper' %}">Record an Upper Body Workout!</a>
             <a href="{% url 'lower' %}">Record an Lower Body Workout!</a>
         </div>
+        <div>
+            <p>Sets: {{context.sets}}</p>
+            <p>Reps: {{context.reps}}</p>
+        </div>
+        <div></div>
 
         {% else %}
         <a href="{% provider_login_url 'google' %}">Login With Google</a>
