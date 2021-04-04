@@ -11,5 +11,5 @@ urlpatterns = [
    # path("upper/", views.UpperBodyView.as_view(), name="upper"),
     path("upper/", views.UpperBodyView, name="upper"),
     path("cardio/", views.CardioView, name="cardio"),
-    path("lower/", views.LowerBodyView, name="cardio"),
+    path("lower/", views.LowerBodyView, name="lower"),
 ]
