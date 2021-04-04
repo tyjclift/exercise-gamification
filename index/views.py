@@ -47,4 +47,4 @@ def LowerBodyView(request):
         return render(request, 'index.html', {'querey_list': querey_list})
     context = {'form': form }
         
-    return render(request, 'index/cardio_form.html', context)
+    return render(request, 'index/lowerbody_form.html', context)
