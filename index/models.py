@@ -11,8 +11,8 @@ class Cardio(models.Model):
     # biking = models.CharField(max_length=10)
     # swimming = models.CharField(max_length=10)
     # walking = models.CharField(max_length=10)
-    time = models.CharField(max_length=10, default='')
-    distance = models.CharField(max_length=10, default='')
+    time = models.CharField(max_length=4, default='')
+    distance = models.CharField(max_length=4, default='')
 
 class CardioForm(forms.ModelForm):
     class Meta:
