@@ -13,7 +13,7 @@ def UpperBodyView(request):
     form = UpperBodyForm(request.POST or None)
     if form.is_valid():
         form.save()
-        querey_list = UpperBody.objects.filter(user=request.user)
+        querey_list = UpperBody.objects.filter(current_user=request.user)
         return render(request, 'index/upper_list.html', {'upper_querey_list': querey_list})
     context = {'form': form}
 
@@ -24,7 +24,7 @@ def CardioView(request):
     form = CardioForm(request.POST or None)
     if form.is_valid():
         form.save()
-        querey_list = Cardio.objects.filter(user=request.user)
+        querey_list = Cardio.objects.filter(current_user=request.user)
         return render(request, 'index/cardio_list.html', {'cardio_querey_list': querey_list})
     context = {'form': form}
 
@@ -35,7 +35,7 @@ def LowerBodyView(request):
     form = LowerBodyForm(request.POST or None)
     if form.is_valid():
         form.save()
-        querey_list = LowerBody.objects.filter(user=request.user)
+        querey_list = LowerBody.objects.filter(current_user=request.user)
         return render(request, 'index/lower_list.html', {'lower_querey_list': querey_list})
     context = {'form': form}
 
