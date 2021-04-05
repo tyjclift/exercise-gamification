@@ -9,24 +9,24 @@ import datetime
 # Create your models here.
 
 Cardio_Types = (
-        ('running', 'RUNNING'),
-        ('biking', 'BIKING'),
-        ('swimming', 'SWIMMING'),
-        ('walking', 'WALKING'),
+        ('Running', 'RUNNING'),
+        ('Biking', 'BIKING'),
+        ('Swimming', 'SWIMMING'),
+        ('Walking', 'WALKING'),
 )
 UpperBody_Types = (
-        ('pushups', 'PUSHUPS'),
-        ('pullups', 'PULLUPS'),
-        ('back_row', 'BACK_ROW'),
-        ('bicep_curls', 'BICEP_CURLS'),
-        ('tricep_extensions', 'TRICEP_EXTENSIONS'),
+        ('Pushups', 'PUSHUPS'),
+        ('Pullups', 'PULLUPS'),
+        ('Back row', 'BACK_ROW'),
+        ('Bicep curls', 'BICEP_CURLS'),
+        ('Tricep Extensions', 'TRICEP_EXTENSIONS'),
 )
 LowerBody_Types = (
-        ('sqauts', 'SQUATS'),
-        ('lunges', 'LUNGES'),
-        ('calf_raises', 'CALF_RAISES'),
-        ('leg_press', 'LEG_PRESS'),
-        ('deadlifts', 'DEADLIFTS'),
+        ('Squats', 'SQUATS'),
+        ('Lunges', 'LUNGES'),
+        ('Calf Raises', 'CALF_RAISES'),
+        ('Leg Press', 'LEG_PRESS'),
+        ('Deadlifts', 'DEADLIFTS'),
 )
 
 
