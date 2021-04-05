@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<style>
+	h4 {
+	font-weight: normal;
+	}
+</style>
+<h1 class="d-flex justify-content-center">Lower Body Workouts List:</h1>
+
+<div class="container text-center">
+    {% for data in lower_querey_list %}
+		<div class="list-group-item flex-column">
+            <h3>Type: {{ data.type }}</h3>
+			<h4>Sets: {{ data.sets }}</h4>
+			<h4>Reps: {{ data.reps }}</h4>
+			<h4>Date: {{ data.date }}</h4>
+		</div>
+	{% endfor %}
+</div>
+
+{% endblock content %}
