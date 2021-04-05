@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView
 from django import forms
+from django.contrib.auth.models import User
 import datetime
 
 # Create your models here.
@@ -40,6 +41,12 @@ class Cardio(models.Model):
     type = models.CharField(max_length=17, choices=Cardio_Types, default='running')
     date = models.DateField(default=datetime.date.today)
 
+    current_user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
 class CardioForm(forms.ModelForm):
     class Meta:
         model = Cardio
@@ -56,6 +63,12 @@ class LowerBody(models.Model):
     type = models.CharField(max_length=17, choices=LowerBody_Types, default='sqauts')
     date = models.DateField(default=datetime.date.today)
 
+    current_user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
 class LowerBodyForm(forms.ModelForm):
     class Meta:
         model = LowerBody
@@ -71,6 +84,12 @@ class UpperBody(models.Model):
     sets = models.PositiveSmallIntegerField(default=0)
     type = models.CharField(max_length=17, choices=UpperBody_Types, default='pushups')
     date = models.DateField(default=datetime.date.today)
+
+    current_user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 class UpperBodyForm(forms.ModelForm):
     class Meta:
