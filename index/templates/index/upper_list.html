@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1 class="d-flex justify-content-center">Upper Body Workouts List:</h1>
+
+<div class="container text-center">
+    {% for data in upper_querey_list %}
+		<div class="list-group-item flex-column">
+            <h5 class="mb-1">Type: {{ data.type }}</p>
+			<p class="mb-1">Time: {{ data.time }}</h5>
+			<p class="mb-1">Distance: {{ data.distance }}</p>
+			<p class="mb-1">Date: {{ data.date }}</p>
+		</div>
+	{% endfor %}
+</div>
+
+{% endblock content %}
