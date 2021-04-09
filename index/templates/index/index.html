@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>WhateverOurAppisCalled</title>
+    <title>Exercise Gamification</title>
 </head>
 {% endblock title %}
 
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">WhateverOurAppIsCalled</a>
+    <a class="navbar-brand">Exercise Gamification</a>
     {% if user.is_authenticated %}
     <div class="collapse navbar-collapse">
         <div class="navbar-nav">
@@ -23,7 +23,7 @@
             Welcome, {{ user.username }}
         </span>
     </div>
-  {% endif %}
+    {% endif %}
 </nav>
 {% endblock header %}
 
@@ -34,33 +34,48 @@
     <body>
         {% if user.is_authenticated %}
 
-        <div class="d-flex justify-content-center">
-            <select name="menu" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">
-        <option selected="{% url 'index' %}">Select One</option>
-        <option value="{% url 'cardio' %}">Cardio</option>
-        <option value="{% url 'upper' %}">Upper Body</option>
-        <option value="{% url 'lower' %}">Lower Body</option>
-    </select>
+        <div class="d-flex justify-content-center" style="padding:3vh">progress bar here</div>
+
+        <div class="dropdown d-flex justify-content-center" style="padding:3vh">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-expanded="false">Select Workout Type</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'cardio' %}">Cardio</a>
+                <a class="dropdown-item" href="{% url 'upper' %}">Upper</a>
+                <a class="dropdown-item" href="{% url 'upper' %}">Lower</a>
+            </div>
         </div>
 
-        <div class="d-flex justify-content-center">
-        	{% for data in upper_querey_list %}
-				<div class="list-group-item flex-column">
-                    <p class="mb-1">Type: {{ data.type }}</p>
-					<h5 class="mb-1">Sets: {{ data.sets }}</h5>
-					<p class="mb-1">Reps: {{ data.reps }}</p>
-				</div>
-			{% endfor %}
-        </div>
 
         <div class="d-flex justify-content-center">
-        	{% for data in lower_querey_list %}
-				<div class="list-group-item flex-column">
-                    <p class="mb-1">Type: {{ data.type }}</p>
-					<h5 class="mb-1">Sets: {{ data.sets }}</h5>
-					<p class="mb-1">Reps: {{ data.reps }}</p>
-				</div>
-			{% endfor %}
+            {% for data in cardio_query_list %}
+            <div class="list-group-item flex-column">
+                <h5 class="mb-1">Type: {{ data.type }}</h5>
+                <p class="mb-1">Time: {{ data.time }}</p>
+                <p class="mb-1">Distance: {{ data.distance }}</p>
+                <p class="mb-1">Date: {{ data.date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex justify-content-center">
+            {% for data in upper_query_list %}
+            <div class="list-group-item flex-column">
+                <h5 class="mb-1">Type: {{ data.type }}</h5>
+                <p class="mb-1">Sets: {{ data.sets }}</p>
+                <p class="mb-1">Reps: {{ data.reps }}</p>
+                <p class="mb-1">Date: {{ data.date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex justify-content-center">
+            {% for data in lower_query_list %}
+            <div class="list-group-item flex-column">
+                <h5 class="mb-1">Type: {{ data.type }}</h5>
+                <p class="mb-1">Sets: {{ data.sets }}</p>
+                <p class="mb-1">Reps: {{ data.reps }}</p>
+                <p class="mb-1">Date: {{ data.date }}</p>
+            </div>
+            {% endfor %}
         </div>
 
         {% else %}

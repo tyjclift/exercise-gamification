@@ -1,12 +1,14 @@
-{% extends "index.html" %}
+{% extends "index/index.html" %}
 
 {% block content %}
 
-<h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
+<div style="min-height:85vh">
+    <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
 
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create" />
-</form>
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create" />
+    </form>
+</div>
 
 {% endblock content %}
