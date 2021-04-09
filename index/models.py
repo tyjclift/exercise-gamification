@@ -4,7 +4,6 @@ from django import forms
 from django.contrib.auth.models import User
 import datetime
 
-# Create your models here.
 
 Cardio_Types = (
         ('Running', 'RUNNING'),

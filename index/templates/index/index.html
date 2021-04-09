@@ -1,4 +1,7 @@
 {% load socialaccount %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'index/index.css' %}">
 
 {% block title %}
 
@@ -12,14 +15,16 @@
 {% endblock title %}
 
 {% block header %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand">Exercise Gamification</a>
     {% if user.is_authenticated %}
     <div class="collapse navbar-collapse">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
-        </div>
-        <span class="navbar-text">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+        </ul>
+        <span class="form-inline navbar-text" style="color:white">
             Welcome, {{ user.username }}
         </span>
     </div>
@@ -36,7 +41,7 @@
 
         <div class="d-flex justify-content-center" style="padding:3vh">progress bar here</div>
 
-        <div class="dropdown d-flex justify-content-center" style="padding:3vh">
+        <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-expanded="false">Select Workout Type</button>
             <div class="dropdown-menu">
@@ -46,36 +51,50 @@
             </div>
         </div>
 
-
-        <div class="d-flex justify-content-center">
-            {% for data in cardio_query_list %}
-            <div class="list-group-item flex-column">
-                <h5 class="mb-1">Type: {{ data.type }}</h5>
-                <p class="mb-1">Time: {{ data.time }}</p>
-                <p class="mb-1">Distance: {{ data.distance }}</p>
-                <p class="mb-1">Date: {{ data.date }}</p>
+        <div style="margin:5vh;">
+            <h3>Cardio Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in cardio_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Time: {{data.time}}</p>
+                        <p class="card-subtitle">Distance: {{data.distance}}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-        <div class="d-flex justify-content-center">
-            {% for data in upper_query_list %}
-            <div class="list-group-item flex-column">
-                <h5 class="mb-1">Type: {{ data.type }}</h5>
-                <p class="mb-1">Sets: {{ data.sets }}</p>
-                <p class="mb-1">Reps: {{ data.reps }}</p>
-                <p class="mb-1">Date: {{ data.date }}</p>
+        <div style="margin:5vh;">
+            <h3>Upper Body Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in upper_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Sets: {{data.sets}}</p>
+                        <p class="card-subtitle">Reps: {{data.reps}}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-        <div class="d-flex justify-content-center">
-            {% for data in lower_query_list %}
-            <div class="list-group-item flex-column">
-                <h5 class="mb-1">Type: {{ data.type }}</h5>
-                <p class="mb-1">Sets: {{ data.sets }}</p>
-                <p class="mb-1">Reps: {{ data.reps }}</p>
-                <p class="mb-1">Date: {{ data.date }}</p>
+        <div style="margin:5vh;">
+            <h3>Lower Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in cardio_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Sets: {{data.sets}}</p>
+                        <p class="card-subtitle">Reps: {{data.reps}}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
 
         {% else %}
