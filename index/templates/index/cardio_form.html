@@ -1,12 +1,43 @@
-{% extends "index.html" %}
+{% extends "index/index.html" %}
 
 {% block content %}
 
-<h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
+<div style="min-height:85vh">
+    <h1 class="d-flex justify-content-center">Record a Cardio Workout!</h1>
 
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create" />
-</form>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create" />
+    </form>
+</div>
+
+<!-- <div style="min-height:85vh">
+    <h1 class="d-flex justify-content-center">Record a Cardio Workout!</h1>
+
+    <form method="post">{% csrf_token %}
+        <div class="form-group">
+            <label for="id_type">Type </label>
+            <select name="type" id="id_type">
+                <option value="Running">RUNNING</option>
+                <option value="Biking">BIKING</option>
+                <option value="Swimming">SWIMMING</option>
+                <option value="Walking">WALKING</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="id_time">Time </label>
+            <input type="number" name="time" value="{{form.time}}" min="0" required id="id_time">
+        </div>
+        <div class="form-group">
+            <label for="id_distance">Distance</label>
+            <input type="number" name="distance" value="{{form.distance}}" min="0" required id="id_distance">
+        </div>
+        <div class="form-group">
+            <label for="id_date">Date </label>
+            <input type="text" name="date" value="{{form.date}}" required id="id_date">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div> -->
 
 {% endblock content %}

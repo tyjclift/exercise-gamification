@@ -1,0 +1,131 @@
+{% load socialaccount %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'index/index.css' %}">
+
+{% block title %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Exercise Gamification</title>
+</head>
+{% endblock title %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand">Exercise Gamification</a>
+    {% if user.is_authenticated %}
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+        </ul>
+        <span class="form-inline navbar-text" style="color:white">
+            Welcome, {{ user.username }}
+        </span>
+    </div>
+    {% endif %}
+</nav>
+{% endblock header %}
+
+{% block content %}
+
+<div style="min-height:85vh">
+
+    <body>
+        {% if user.is_authenticated %}
+
+        <div class="d-flex justify-content-center" style="padding:3vh">progress bar here</div>
+
+        <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-expanded="false">Select Workout Type</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'cardio' %}">Cardio</a>
+                <a class="dropdown-item" href="{% url 'upper' %}">Upper</a>
+                <a class="dropdown-item" href="{% url 'upper' %}">Lower</a>
+            </div>
+        </div>
+
+        <div style="margin:5vh;">
+            <h3>Cardio Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in cardio_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Time: {{data.time}}</p>
+                        <p class="card-subtitle">Distance: {{data.distance}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="margin:5vh;">
+            <h3>Upper Body Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in upper_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Sets: {{data.sets}}</p>
+                        <p class="card-subtitle">Reps: {{data.reps}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="margin:5vh;">
+            <h3>Lower Log</h3>
+            <div class="d-flex flex-wrap">
+                {% for data in cardio_query_list %}
+                <div class="card" style="width:12vw; margin:3px">
+                    <div class="card-body">
+                        <h5 class=card-title>{{data.type}}</h5>
+                        <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
+                        <p class="card-subtitle">Sets: {{data.sets}}</p>
+                        <p class="card-subtitle">Reps: {{data.reps}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% else %}
+        <a href="{% provider_login_url 'google' %}">Login With Google</a>
+        {% endif %}
+
+    </body>
+</div>
+
+
+{% endblock content %}
+
+{% block footer %}
+<footer class="bg-light text-center text-lg-start">
+    <div class="navbar navbar-inverse navbar-static-bottom">
+        <div class="navbar-text pull-left">
+            Author: a-14
+        </div>
+        <div class="navbar-text pull-left">
+            &copy; a-14, 2021
+        </div>
+    </div>
+</footer>
+{% endblock footer %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
