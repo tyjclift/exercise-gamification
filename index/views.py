@@ -60,10 +60,10 @@ def LowerBodyView(request):
     return render(request, 'index/lowerbody_form.html', context)
 
 
-def get_points_by_type(querey_list,type):
+def get_points_by_type(query_list,type):
     points_list=[]
     if type == "upper":
-        for data in querey_list:
+        for data in query_list:
             if data.type == "Pushups":
                 mult = 1
             elif data.type == "Pullups":
@@ -76,7 +76,7 @@ def get_points_by_type(querey_list,type):
             points_list.append(value)
         return points_list
     elif type == "cardio":
-        for data in querey_list:
+        for data in query_list:
             if data.type == "Running":
                 mult = 3
             elif data.type == "Biking":
@@ -87,11 +87,11 @@ def get_points_by_type(querey_list,type):
                 mult = 1
             else:
                 print("error something went wrong.")
-            value = round(((data.time)**1.25 * (data.distance + data.distance/data.time)*mult))
+            value = round(((data.time)**1.25 * (data.distance + data.distance/max(1,data.time))*mult))
             points_list.append(value)
         return points_list
     elif type == "lower":
-        for data in querey_list:
+        for data in query_list:
             if data.type == "Squats":
                 mult = .9
             elif data.type == "Lunges":
