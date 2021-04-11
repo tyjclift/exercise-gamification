@@ -49,7 +49,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'cardio' %}">Cardio</a>
                 <a class="dropdown-item" href="{% url 'upper' %}">Upper</a>
-                <a class="dropdown-item" href="{% url 'upper' %}">Lower</a>
+                <a class="dropdown-item" href="{% url 'lower' %}">Lower</a>
             </div>
         </div>
 
@@ -86,7 +86,7 @@
         <div style="margin:5vh;">
             <h3>Lower Log</h3>
             <div class="d-flex flex-wrap">
-                {% for data in cardio_query_list %}
+                {% for data in lower_query_list %}
                 <div class="card" style="width:12vw; margin:3px">
                     <div class="card-body">
                         <h5 class=card-title>{{data.type}}</h5>
