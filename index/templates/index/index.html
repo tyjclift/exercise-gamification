@@ -1,5 +1,6 @@
 {% load socialaccount %}
 {% load static %}
+{% load index %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'index/index.css' %}">
 
@@ -42,6 +43,7 @@
         {% if user.is_authenticated %}
 
         <div class="d-flex justify-content-center" style="padding:3vh">progress bar here</div>
+        <div class="d-flex justify-content-center" style="padding:3vh">Total Points: {{total_points}}</div>
 
         <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -53,6 +55,12 @@
             </div>
         </div>
 
+        <script>
+            function get_index(list,index){
+            return list[index];
+            }
+        </script>
+
         <div style="margin:5vh;">
             <h3>Cardio Log</h3>
             <div class="d-flex flex-wrap">
@@ -63,6 +71,7 @@
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
                         <p class="card-subtitle">Time: {{data.time}}</p>
                         <p class="card-subtitle">Distance: {{data.distance}}</p>
+                        <p class="card-subtitle">Points: {{cardio_points|index:forloop.counter0}} </p>
                     </div>
                 </div>
                 {% endfor %}
@@ -78,6 +87,7 @@
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
                         <p class="card-subtitle">Sets: {{data.sets}}</p>
                         <p class="card-subtitle">Reps: {{data.reps}}</p>
+                        <p class="card-subtitle">Points: {{upper_points|index:forloop.counter0}} </p>
                     </div>
                 </div>
                 {% endfor %}
@@ -93,6 +103,7 @@
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
                         <p class="card-subtitle">Sets: {{data.sets}}</p>
                         <p class="card-subtitle">Reps: {{data.reps}}</p>
+                        <p class="card-subtitle">Points: {{lower_points|index:forloop.counter0}} </p>
                     </div>
                 </div>
                 {% endfor %}
