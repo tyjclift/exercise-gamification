@@ -5,6 +5,23 @@ from django.views.generic.edit import CreateView
 
 from .models import *
 
+mult_vals = {
+    'Running': 3,
+    'Biking': 2.63,
+    'Swimming': 2,
+    'Walking': 1,
+    'Pushups': 1,
+    'Pullups': 3.5,
+    'Back row': 3,
+    'Bicep Curls': 1.25,
+    'Tricep Extensions': 1.25,
+    'Squats': .9,
+    'Lunges': .95,
+    'Calf Raises': .85,
+    'Leg Press': 1.75,
+    'Deadlifts': 2.25,
+}
+
 def IndexView(request):
     context = {}
     if request.user.is_authenticated:
@@ -62,54 +79,26 @@ def LowerBodyView(request):
 
 def get_points_by_type(query_list,type):
     points_list=[]
-    if type == "upper":
+    if type == "cardio":
         for data in query_list:
-            if data.type == "Pushups":
-                mult = 1
-            elif data.type == "Pullups":
-                mult = 3.5
-            elif data.type == "Back row":
-                mult = 3
-            else:
-                mult = 1.25
-            value = round(data.sets * data.reps * mult)
+            value = round(((data.time)**1.25 * (data.distance + data.distance/max(1,data.time))*mult_vals[data.type]))
             points_list.append(value)
         return points_list
-    elif type == "cardio":
+        
+    elif type == "upper":
         for data in query_list:
-            if data.type == "Running":
-                mult = 3
-            elif data.type == "Biking":
-                mult = 2.63
-            elif data.type == "Swimming":
-                mult = 2
-            elif data.type == "Walking":
-                mult = 1
-            else:
-                print("error something went wrong.")
-            value = round(((data.time)**1.25 * (data.distance + data.distance/max(1,data.time))*mult))
+            value = round(data.sets * data.reps * mult_vals[data.type])
             points_list.append(value)
         return points_list
     elif type == "lower":
         for data in query_list:
-            if data.type == "Squats":
-                mult = .9
-            elif data.type == "Lunges":
-                mult = .95
-            elif data.type == "Calf Raises":
-                mult = .85
-            elif data.type == "Leg Press":
-                mult = 1.75
-            elif data.type == "Deadlifts":
-                mult = 2.25
-            else:
-                print("error something went wrong.")
-            value = round(data.sets * data.reps * mult)
+            value = round(data.sets * data.reps * mult_vals[data.type])
             points_list.append(value)
         return points_list
     else:
         print("invalid call")
         return points_list
+
 def get_total_points(upper,lower,cardio):
     total = 0
     upper_list = get_points_by_type(upper,"upper")
