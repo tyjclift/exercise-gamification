@@ -13,7 +13,7 @@ mult_vals = {
     'Pushups': 1,
     'Pullups': 3.5,
     'Back row': 3,
-    'Bicep Curls': 1.25,
+    'Bicep curls': 1.25,
     'Tricep Extensions': 1.25,
     'Squats': .9,
     'Lunges': .95,
