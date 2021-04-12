@@ -25,6 +25,8 @@ mult_vals = {
 def IndexView(request):
     context = {}
     if request.user.is_authenticated:
+        total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
+        curr_level = get_level(total_points)
         context = {
             'cardio_query_list': Cardio.objects.filter(current_user=request.user),
             'upper_query_list': UpperBody.objects.filter(current_user=request.user),
@@ -32,7 +34,10 @@ def IndexView(request):
             'cardio_points': get_points_by_type(Cardio.objects.filter(current_user=request.user),"cardio"),
             'upper_points': get_points_by_type(UpperBody.objects.filter(current_user=request.user), "upper"),
             'lower_points': get_points_by_type(LowerBody.objects.filter(current_user=request.user), "lower"),
-            'total_points': get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
+            'total_points': total_points,
+            'curr_level': curr_level,
+            'pts_to_next_level': get_pts_to_next(curr_level),
+            'pct_to_next_level': get_pct_to_next(total_points, curr_level),
         }
     
     return render(request, 'index/index.html', context)
@@ -111,3 +116,29 @@ def get_total_points(upper,lower,cardio):
     for x in cardio_list:
         total+=x
     return total
+
+# Based on D&D level system:
+# xp_to_next = 500 * (level ** 2) - (500 * level)
+# so 10000 to get to level 2, 30000 to get to level 3, 60000 to get to level 4, and so on
+
+def get_level(xp):
+    if(xp < 0):
+        print("error: negative xp")
+    for level in range (1, 1000):
+        print("entering loop")
+        print("level: ", level)
+        print("xp: ", xp, "/", (500 * (level ** 2) - (500 * level)))
+        if(xp < ((500 * (level ** 2) - (500 * level))) * 10):
+            print("xp < goal")
+            return level - 1
+            break
+    return 0
+
+def get_pts_to_next(curr_level):
+    level = curr_level + 1
+    return ((500 * (level ** 2) - (500 * level)) * 10)
+
+
+def get_pct_to_next(total_points, curr_level):
+    pct = total_points / get_pts_to_next(curr_level) * 100
+    return round(pct)
