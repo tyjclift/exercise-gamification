@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView
+from django.contrib.auth.models import User
+from friendship.models import Friend, Follow, Block, FriendshipRequest
 
 from .models import *
 
@@ -81,7 +83,66 @@ def LowerBodyView(request):
     context = {'form': form}
     return render(request, 'index/lowerbody_form.html', context)
 
-
+def SocialView(request):
+    form = FriendRequestForm(request.POST or None)
+    usernames = []
+    accept_btn_list = []
+    reject_btn_list =[]
+    print(Friend.objects.rejected_requests(user=request.user)[0].from_user.username)
+    for i in range(len(User.objects.values())):
+        usernames.append((User.objects.values()[i]['username']))
+    for my_request in Friend.objects.requests(user=request.user):
+        accept_btn_list.append("accept_" + my_request.from_user.email)
+        reject_btn_list.append("reject_" + my_request.from_user.email)
+    if form.is_valid():
+        form_user = form.save(commit=False)
+        form_user.current_user = request.user
+        form_user.save()
+        form.save()
+    if request.method == 'POST' and 'username' in request.POST.keys():
+        print(request.POST)
+        print(Friend.objects.unrejected_requests(user=request.user))
+        requested_username = request.POST['username']
+        if requested_username in usernames and requested_username!=request.user.username:
+            other_user = User.objects.get(username=requested_username)
+            Friend.objects.add_friend(
+                request.user,  # The sender
+                other_user,  # The recipient
+                message='Hi! I would like to add you')
+            ctx = {
+                'requested_username': requested_username,
+                'sent_request': Friend.objects.sent_requests(user=request.user)}
+            return render(request, 'index/sent.html', context = ctx)
+    if request.method == 'POST' and 'Accept' in request.POST.values():
+        for btn in accept_btn_list:
+            if btn in request.POST.keys():
+                email = btn[7:]
+                user = User.objects.get(email__exact=email)
+                friend_request = FriendshipRequest.objects.get(from_user=user,to_user=request.user)
+                print(friend_request.from_user.email)
+                friend_request.accept()
+                ctx = {
+                    'friend':user.username,
+                }
+                return render(request, 'index/accepted.html', context=ctx)
+    if request.method == 'POST' and 'Reject' in request.POST.values():
+        for btn in reject_btn_list:
+            if btn in request.POST.keys():
+                email = btn[7:]
+                user = User.objects.get(email__exact=email)
+                friend_request = FriendshipRequest.objects.get(from_user=user,to_user=request.user)
+                print(Friend.objects.unrejected_requests(user=request.user))
+                friend_request.reject()
+                print(Friend.objects.requests(user=request.user))
+                ctx = {
+                    'friend': user.username,
+                }
+                return render(request, 'index/rejected.html', context=ctx)
+    ctx1 = {'form': form,
+            'sent_requests': Friend.objects.sent_requests(user=request.user),
+            'pending_requests':Friend.objects.unrejected_requests(user=request.user),
+            'has_rejected':Friend.objects.rejected_requests(user=request.user)}
+    return render(request, 'index/social.html', context=ctx1)
 def get_points_by_type(query_list,type):
     points_list=[]
     if type == "cardio":
@@ -142,3 +203,5 @@ def get_pts_to_next(curr_level):
 def get_pct_to_next(total_points, curr_level):
     pct = total_points / get_pts_to_next(curr_level) * 100
     return round(pct)
+
+#print(Friend.objects.friends(request.user))
