@@ -1,0 +1,7 @@
+{% extends "index/index.html" %}
+{% load friendshiptags %}
+{% block content %}
+
+<p>Sent Friend Request to {{requested_username}} </p>
+<a  href="{% url 'social' %}">Return to Social Page</a>
+{% endblock content %}
