@@ -79,3 +79,17 @@ class LowerBodyForm(forms.ModelForm):
         model = LowerBody
         fields = ['type','reps','sets', 'date']
 
+
+class FriendRequest(models.Model):
+    username = models.CharField(max_length=25)
+    current_user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+
+class FriendRequestForm(forms.ModelForm):
+    class Meta:
+        model = FriendRequest
+        fields = ['username']
