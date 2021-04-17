@@ -4,6 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block, FriendshipRequest
+import operator
 
 from .models import *
 
@@ -88,12 +89,22 @@ def SocialView(request):
     usernames = []
     accept_btn_list = []
     reject_btn_list =[]
+    friends_points={}
     print(Friend.objects.rejected_requests(user=request.user)[0].from_user.username)
     for i in range(len(User.objects.values())):
         usernames.append((User.objects.values()[i]['username']))
     for my_request in Friend.objects.requests(user=request.user):
         accept_btn_list.append("accept_" + my_request.from_user.email)
         reject_btn_list.append("reject_" + my_request.from_user.email)
+    for friend in Friend.objects.friends(request.user):
+        upper = UpperBody.objects.filter(current_user=friend)
+        lower = LowerBody.objects.filter(current_user=friend)
+        cardio = Cardio.objects.filter(current_user=friend)
+        friends_points[friend.username]=get_total_points(upper,lower,cardio)
+    friends_points[request.user.username + " (you)"]= get_total_points(UpperBody.objects.filter(current_user=request.user),
+                                                            LowerBody.objects.filter(current_user=request.user),
+                                                            Cardio.objects.filter(current_user=request.user))
+    friends_ordered_by_points = sorted(friends_points.items(), key=operator.itemgetter(1), reverse=True)
     if form.is_valid():
         form_user = form.save(commit=False)
         form_user.current_user = request.user
@@ -141,7 +152,8 @@ def SocialView(request):
     ctx1 = {'form': form,
             'sent_requests': Friend.objects.sent_requests(user=request.user),
             'pending_requests':Friend.objects.unrejected_requests(user=request.user),
-            'has_rejected':Friend.objects.rejected_requests(user=request.user)}
+            'has_rejected':Friend.objects.rejected_requests(user=request.user),
+            'friends_lb': friends_ordered_by_points}
     return render(request, 'index/social.html', context=ctx1)
 def get_points_by_type(query_list,type):
     points_list=[]
