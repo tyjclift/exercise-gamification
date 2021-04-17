@@ -1,7 +1,26 @@
 {% extends "index/index.html" %}
 {% load friendshiptags %}
+{% load index %}
 {% block content %}
 <p>Friends: {% friends request.user %}</p>
+
+<table>
+  <tbody>
+    <tr>
+    	<th>Rank</th>
+    	<th>Username</th>
+    	<th>Points</th>
+    </tr>
+    {% for data in friends_lb %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{data.0}}</td>
+      <td>{{data.1}}</td>
+	</tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 
 <div style="margin:5vh;">
             <h3>Sent Friend Requests</h3>
