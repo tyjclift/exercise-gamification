@@ -90,9 +90,9 @@ def SocialView(request):
     accept_btn_list = []
     reject_btn_list =[]
     friends_points={}
-    print(Friend.objects.rejected_requests(user=request.user)[0].from_user.username)
-    for i in range(len(User.objects.values())):
-        usernames.append((User.objects.values()[i]['username']))
+    if len(User.objects.values())>0:
+        for i in range(len(User.objects.values())):
+            usernames.append((User.objects.values()[i]['username']))
     for my_request in Friend.objects.requests(user=request.user):
         accept_btn_list.append("accept_" + my_request.from_user.email)
         reject_btn_list.append("reject_" + my_request.from_user.email)
