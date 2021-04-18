@@ -169,7 +169,7 @@ def UserListView(request):
 				LowerBody.objects.filter(current_user=x),
 				Cardio.objects.filter(current_user=x))
 		total_points.append({
-			"user": x,
+			"user": x.first_name + " " + x.last_name,
 			"points": points,
 			"level": get_level(points)
 		})
