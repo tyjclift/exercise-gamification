@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView
-
+from functools import cmp_to_key
 from .models import *
 
 mult_vals = {
@@ -81,6 +81,39 @@ def LowerBodyView(request):
     context = {'form': form}
     return render(request, 'index/lowerbody_form.html', context)
 
+def comparator(user_1, user_2):
+	return user_1["points"] > user_2["points"]
+
+def UserListView(request):
+	all_users = User.objects.all()
+	# if all users is empty then show nothing
+
+	total_points = []
+	for x in all_users:
+		points = get_total_points(UpperBody.objects.filter(current_user=x),
+				LowerBody.objects.filter(current_user=x),
+				Cardio.objects.filter(current_user=x))
+		total_points.append({
+			"user": x,
+			"points": points,
+			"level": get_level(points)
+		})
+
+	total_points.sort(key=cmp_to_key(comparator))
+
+	list_to_pass = []
+	count = 0
+	for i in range(len(total_points)):
+		if count == 5:
+			break
+		list_to_pass.append(total_points[i])
+		count += 1
+
+	context = {
+		"database_list": list_to_pass
+	}
+
+	return render(request, 'index/database_list.html', context)
 
 def get_points_by_type(query_list,type):
     points_list=[]
