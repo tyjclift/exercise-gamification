@@ -174,12 +174,7 @@ def UserListView(request):
 			"level": get_level(points)
 		})
 
-	for i in range(len(total_points)):
-		print(total_points[i]["user"])
 	total_points.sort(key=cmp_to_key(comparator))
-	print("\n")
-	for i in range(len(total_points)):
-		print(total_points[i]["user"])
 
 	list_to_pass = []
 	count = 0
