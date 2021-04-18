@@ -82,7 +82,7 @@ def LowerBodyView(request):
     return render(request, 'index/lowerbody_form.html', context)
 
 def comparator(user_1, user_2):
-	return user_1["points"] > user_2["points"]
+	return user_2["points"] - user_1["points"]
 
 def UserListView(request):
 	all_users = User.objects.all()
@@ -99,7 +99,12 @@ def UserListView(request):
 			"level": get_level(points)
 		})
 
+	for i in range(len(total_points)):
+		print(total_points[i]["user"])
 	total_points.sort(key=cmp_to_key(comparator))
+	print("\n")
+	for i in range(len(total_points)):
+		print(total_points[i]["user"])
 
 	list_to_pass = []
 	count = 0
