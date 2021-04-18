@@ -1,0 +1,18 @@
+{% extends "index/index.html" %}
+{% block content %}
+
+<div class="container text-center">
+	<div class="list-group">
+		{% csrf_token %}
+		{% for user in database_list %}
+			<div class="list-group-item flex-column">
+				<h4>User: {{ user.user }}</h4>
+				<h4>Points: {{ user.points }}</h4>
+				<h4>Level: {{ user.level }}</h4>
+			</div>
+			<br>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock content %}

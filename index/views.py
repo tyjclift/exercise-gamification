@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block, FriendshipRequest
 import operator
-
+from functools import cmp_to_key
 from .models import *
 
 mult_vals = {
@@ -155,6 +155,46 @@ def SocialView(request):
             'has_rejected':Friend.objects.rejected_requests(user=request.user),
             'friends_lb': friends_ordered_by_points}
     return render(request, 'index/social.html', context=ctx1)
+
+def comparator(user_1, user_2):
+	return user_2["points"] - user_1["points"]
+
+def UserListView(request):
+	all_users = User.objects.all()
+	# if all users is empty then show nothing
+
+	total_points = []
+	for x in all_users:
+		points = get_total_points(UpperBody.objects.filter(current_user=x),
+				LowerBody.objects.filter(current_user=x),
+				Cardio.objects.filter(current_user=x))
+		total_points.append({
+			"user": x,
+			"points": points,
+			"level": get_level(points)
+		})
+
+	for i in range(len(total_points)):
+		print(total_points[i]["user"])
+	total_points.sort(key=cmp_to_key(comparator))
+	print("\n")
+	for i in range(len(total_points)):
+		print(total_points[i]["user"])
+
+	list_to_pass = []
+	count = 0
+	for i in range(len(total_points)):
+		if count == 5:
+			break
+		list_to_pass.append(total_points[i])
+		count += 1
+
+	context = {
+		"database_list": list_to_pass
+	}
+
+	return render(request, 'index/database_list.html', context)
+
 def get_points_by_type(query_list,type):
     points_list=[]
     if type == "cardio":
