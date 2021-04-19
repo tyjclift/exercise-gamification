@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <div style="min-height:85vh">
     <style>
         img {
@@ -21,7 +23,7 @@
 
     <figure>
 
-        <img src="../../../staticfiles/admin/img/SquatAnatomy.png" alt="Squat Anatomy" width="500" height="300">
+        <img src="{% static 'index/SquatAnatomy.png' %}" alt="Squat Anatomy" width="500" height="300">
         <figcaption>Squat Tips:
             <br>Keep your Chest up
             <br>Pause when you reach parallel

@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <div style="min-height:85vh">
     <style>
         img {
@@ -21,7 +23,7 @@
 
     <figure>
 
-        <img src="../../../staticfiles/admin/img/RunningAnatomy.png" alt="Running Anatomy" width="500" height="300">
+        <img src="{% static 'index/RunningAnatomy.png' %}" alt="Running Anatomy" width="500" height="300">
         <figcaption>Runnning Tips:
             <br>Relax your shoulders
             <br>Set a rhythm by swinging your arms
