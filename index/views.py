@@ -122,8 +122,7 @@ def SocialView(request):
                 other_user,  # The recipient
                 message='Hi! I would like to add you')
             ctx = {
-                'requested_username': requested_username,
-                'sent_request': Friend.objects.sent_requests(user=request.user)}
+                'requested_username': requested_username,}
             return render(request, 'index/sent.html', context = ctx)
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
@@ -150,8 +149,20 @@ def SocialView(request):
                     'friend': user.username,
                 }
                 return render(request, 'index/rejected.html', context=ctx)
+    sent_requests = Friend.objects.sent_requests(user=request.user)
+    for my_request in sent_requests[:]:
+        has_rejected = Friend.objects.rejected_requests(user=my_request.to_user)
+        for rejects in has_rejected:
+            if rejects.from_user == request.user:
+                sent_requests.remove(my_request)
+                print("Friendship request from "+ request.user.username + "was rejected by "+ my_request.to_user.email)
+                mean_user = User.objects.get(email__exact=my_request.to_user.email)
+                FriendshipRequest.objects.filter(
+                    from_user=request.user, to_user=mean_user
+                ).delete()
+
     ctx1 = {'form': form,
-            'sent_requests': Friend.objects.sent_requests(user=request.user),
+            'sent_requests': sent_requests,
             'pending_requests':Friend.objects.unrejected_requests(user=request.user),
             'has_rejected':Friend.objects.rejected_requests(user=request.user),
             'friends_lb': friends_ordered_by_points}
