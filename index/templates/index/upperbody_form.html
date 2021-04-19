@@ -1,14 +1,18 @@
 {% extends "index/index.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div style="min-height:85vh">
-    <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
-
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create" />
-    </form>
+    <br>
+    <h1 class="d-flex justify-content-center">Record a Cardio Workout!</h1>
+    <div style="margin: 20px 60px 20px 60px;">
+        <form method="post">{% csrf_token %}
+            {{ form | crispy}}
+            <input type="submit" value="Create" />
+        </form>
+    </div>  
 </div>
 
 {% endblock content %}

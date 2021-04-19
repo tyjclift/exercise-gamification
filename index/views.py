@@ -233,11 +233,7 @@ def get_level(xp):
     if(xp < 0):
         print("error: negative xp")
     for level in range (1, 1000):
-        print("entering loop")
-        print("level: ", level)
-        print("xp: ", xp, "/", (500 * (level ** 2) - (500 * level)))
         if(xp < ((500 * (level ** 2) - (500 * level))) * 10):
-            print("xp < goal")
             return level - 1
             break
     return 0
