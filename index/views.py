@@ -31,9 +31,9 @@ def IndexView(request):
         total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
         curr_level = get_level(total_points)
         context = {
-            'cardio_query_list': Cardio.objects.filter(current_user=request.user),
-            'upper_query_list': UpperBody.objects.filter(current_user=request.user),
-            'lower_query_list': LowerBody.objects.filter(current_user=request.user),
+            'cardio_query_list': Cardio.objects.filter(current_user=request.user)[::-1],
+            'upper_query_list': UpperBody.objects.filter(current_user=request.user)[::-1],
+            'lower_query_list': LowerBody.objects.filter(current_user=request.user)[::-1],
             'cardio_points': get_points_by_type(Cardio.objects.filter(current_user=request.user),"cardio"),
             'upper_points': get_points_by_type(UpperBody.objects.filter(current_user=request.user), "upper"),
             'lower_points': get_points_by_type(LowerBody.objects.filter(current_user=request.user), "lower"),
@@ -42,6 +42,7 @@ def IndexView(request):
             'pts_to_next_level': get_pts_to_next(curr_level),
             'pct_to_next_level': get_pct_to_next(total_points, curr_level),
         }
+        
     
     return render(request, 'index/index.html', context)
 
