@@ -3,7 +3,32 @@
 {% block content %}
 
 <div style="min-height:85vh">
+    <style>
+        img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        margin-top: 25px;
+        }
+
+        figure figcaption{
+            text-align: center;
+        }
+    
+    </style>
     <h1 class="d-flex justify-content-center">Record a Lower Body Workout!</h1>
+
+    <figure>
+
+        <img src="../../../staticfiles/admin/img/Squat.png" alt="Squat Anatomy" width="500" height="300">
+        <figcaption>Squat Tips:
+            <br>Keep your Chest up
+            <br>Pause when you reach parallel
+            <br>Drive up through your heels
+        </figcaption>
+
+    </figure>
 
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
