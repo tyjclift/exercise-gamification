@@ -180,17 +180,12 @@ def UserListView(request):
 				LowerBody.objects.filter(current_user=x),
 				Cardio.objects.filter(current_user=x))
 		total_points.append({
-			"user": x,
+			"user": x.first_name + " " + x.last_name,
 			"points": points,
 			"level": get_level(points)
 		})
 
-	for i in range(len(total_points)):
-		print(total_points[i]["user"])
 	total_points.sort(key=cmp_to_key(comparator))
-	print("\n")
-	for i in range(len(total_points)):
-		print(total_points[i]["user"])
 
 	list_to_pass = []
 	count = 0
