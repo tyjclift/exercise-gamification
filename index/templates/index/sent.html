@@ -2,6 +2,9 @@
 {% load friendshiptags %}
 {% block content %}
 
-<p>Sent Friend Request to {{requested_username}} </p>
-<a  href="{% url 'social' %}">Return to Social Page</a>
+<div style="min-height:85vh">
+    <p>Sent Friend Request to {{requested_username}} </p>
+    <a href="{% url 'social' %}">Return to Social Page</a>
+</div>
+
 {% endblock content %}
