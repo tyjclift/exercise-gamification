@@ -140,7 +140,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 4
+SITE_ID = 2
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
