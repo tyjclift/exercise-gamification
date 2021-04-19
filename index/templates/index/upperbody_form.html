@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <div style="min-height:85vh">
     <style>
         img {
@@ -17,13 +19,12 @@
         }
     
     </style>
-   
      
     <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
 
     <figure>
 
-        <img src="../../../staticfiles/admin/img/PushupAnatomy.png" alt="Pushup Anatomy" width="500" height="300">
+        <img src="{% static 'index/PushupAnatomy.png' %}" alt="Pushup Anatomy" width="500" height="300">
         <figcaption>Pushup Tips:
             <br>Make sure your neck and spine are aligned
             <br>Don't shrug your shoulders
