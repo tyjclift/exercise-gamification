@@ -2,6 +2,9 @@
 {% load friendshiptags %}
 {% block content %}
 
-<p>Rejected {{friend}}'s Friend Request </p>
-<a  href="{% url 'social' %}">Return to Social Page</a>
+<div>
+    <p>Rejected {{friend}}'s Friend Request </p>
+    <a href="{% url 'social' %}">Return to Social Page</a>
+</div>
+
 {% endblock content %}

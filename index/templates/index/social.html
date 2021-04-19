@@ -2,50 +2,51 @@
 {% load friendshiptags %}
 {% load index %}
 {% block content %}
-<p>Friends: {% friends request.user %}</p>
-
-<table>
-  <tbody>
-    <tr>
-    	<th>Rank</th>
-    	<th>Username</th>
-    	<th>Points</th>
-    </tr>
-    {% for data in friends_lb %}
-    <tr>
-      <td>{{forloop.counter}}</td>
-      <td>{{data.0}}</td>
-      <td>{{data.1}}</td>
-	</tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-
-<div style="margin:5vh;">
-            <h3>Sent Friend Requests</h3>
-            <div class="d-flex flex-wrap">
-                {% for data in sent_requests %}
-                <div class="card" style="width:12vw; margin:3px">
-                    <div class="card-body">
-                        <h5 class=card-title>{{data.to_user.username}}</h5>
-                        <p class="card-subtitle">Email: {{data.to_user.email}}</p>
-                        <p class="card-subtitle mb-2 text-muted">Date Sent: {{data.created}}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
 <div style="min-height:85vh">
+    <p>Friends: {% friends request.user %}</p>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Points</th>
+            </tr>
+            {% for data in friends_lb %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{data.0}}</td>
+                <td>{{data.1}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
     <div style="margin:5vh;">
+        <h3>Sent Friend Requests</h3>
+        <div class="d-flex flex-wrap">
+            {% for data in sent_requests %}
+            <div class="card" style="width:12vw; margin:3px">
+                <div class="card-body">
+                    <h5 class=card-title>{{data.to_user.username}}</h5>
+                    <p class="card-subtitle">Email: {{data.to_user.email}}</p>
+                    <p class="card-subtitle mb-2 text-muted">Date Sent: {{data.created}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+
+        <div style="margin:5vh;">
             <h3>Pending Friend Requests</h3>
             <div class="d-flex flex-wrap">
                 {% for data in pending_requests %}
                 <div class="card" style="width:12vw; margin:3px">
                     <div class="card-body">
                         <script>
-                        var email = {{data.from_user.email}};
+                            const email = data.from_user.email
                         </script>
                         <h5 class=card-title>{{data.from_user.username}}</h5>
                         <p class="card-subtitle">Email: {{data.from_user.email}}</p>
@@ -63,14 +64,15 @@
             </div>
         </div>
 
+        <div>
+            <h1 class="d-flex justify-content-center">Add a Friend!</h1>
 
-<div style="min-height:85vh">
-    <h1 class="d-flex justify-content-center">Add a Friend!</h1>
-
-    <form class="d-flex justify-content-center" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add!" />
-    </form>
+            <form class="d-flex justify-content-center" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Add!" />
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
