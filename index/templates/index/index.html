@@ -13,7 +13,15 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Exercise Gamification</title>
     <style>
-    :root { --pct:{{pct_to_next_level}}%}
+        :root {
+            --pct: {
+                    {
+                    pct_to_next_level
+                }
+            }
+
+            %
+        }
     </style>
 </head>
 {% endblock title %}
@@ -23,10 +31,7 @@
     <a class="navbar-brand">Exercise Gamification</a>
     {% if user.is_authenticated %}
     <div class="collapse navbar-collapse">
-        <span class="form-inline navbar-text" style="color:white">
-            Welcome, {{ user.username }}
-        </span>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
@@ -34,12 +39,18 @@
                 <a class="nav-link" href="{% url 'social' %}">Social</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'database_list' %}">Leaderboard All</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'database_list' %}">Leaderboard</a>
             </li>
         </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome, {{ user.username }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+        </div>
     </div>
     {% endif %}
 </nav>
@@ -49,20 +60,21 @@
 
 <div style="min-height:85vh">
 
-    
-
     <body>
         {% if user.is_authenticated %}
 
-        <!-- progress bar -->
-    </br>
-        <div class="d-flex justify-content-center" style="padding:3vh; font-weight: bold; font-size: larger;">Level {{curr_level}} ({{total_points}} / {{pts_to_next_level}})</div>
+        <div style="padding:3vw;">
+            <div class="d-flex justify-content-center" style="padding:3vh; font-weight: bold; font-size: larger;">Level
+                {{curr_level}} ({{total_points}} / {{pts_to_next_level}})</div>
 
-        <div class="progress" style="height: 30px">
-            <!-- TODO: Change "width" to correct pct -->
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="1000" style= width:var(--pct);>{{pct_to_next_level}}%</div>
+            <div class="progress" style="height: 30px">
+                <!-- TODO: Change "width" to correct pct -->
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow='width:{{pct_to_next_level}}%' aria-valuemin="0" aria-valuemax="1000"
+                    style='width:{{pct_to_next_level}}%'>
+                    {{pct_to_next_level}}%</div>
+            </div>
         </div>
-
 
         <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -81,10 +93,10 @@
         </script>
 
         <div style="margin:5vh;">
-            <h3>Cardio Log</h3>
+            <h3 style="padding-bottom:8px;">Cardio Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in cardio_query_list %}
-                <div class="card" style="width:12vw; margin:3px">
+                <div class="card" style="width:12vw; margin:5px">
                     <div class="card-body">
                         <h5 class=card-title>{{data.type}}</h5>
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
@@ -97,7 +109,7 @@
             </div>
         </div>
         <div style="margin:5vh;">
-            <h3>Upper Body Log</h3>
+            <h3 style="padding-bottom:8px;">Upper Body Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in upper_query_list %}
                 <div class="card" style="width:12vw; margin:3px">
@@ -113,7 +125,7 @@
             </div>
         </div>
         <div style="margin:5vh;">
-            <h3>Lower Log</h3>
+            <h3 style="padding-bottom:8px;">Lower Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in lower_query_list %}
                 <div class="card" style="width:12vw; margin:3px">
@@ -130,7 +142,11 @@
         </div>
 
         {% else %}
-        <a href="{% provider_login_url 'google' %}">Login With Google</a>
+        <div style="padding:10vw">
+            <h2>Log Into Your Personal Exercise Gamification Dashboard!</h1>
+                <a class="btn btn-primary" role="button" href="{% provider_login_url 'google' %}">Login With
+                    Google</a>
+        </div>
         {% endif %}
 
     </body>

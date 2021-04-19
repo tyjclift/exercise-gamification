@@ -4,15 +4,45 @@
 
 {% block content %}
 
+{% load static %}
+
 <div style="min-height:85vh">
-    <br>
-    <h1 class="d-flex justify-content-center">Record a Cardio Workout!</h1>
+
+    <style>
+        img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        margin-top: 25px;
+        }
+
+        figure figcaption{
+            text-align: center;
+        }
+    
+    </style>
+     
+    <h1 class="d-flex justify-content-center">Record a Upper Body Workout!</h1>
+
+    <figure>
+
+        <img src="{% static 'index/PushupAnatomy.png' %}" alt="Pushup Anatomy" width="500" height="300">
+        <figcaption>Pushup Tips:
+            <br>Make sure your neck and spine are aligned
+            <br>Don't shrug your shoulders
+            <br>Remember to breathe
+        </figcaption>
+
+    </figure>
+
     <div style="margin: 20px 60px 20px 60px;">
         <form method="post">{% csrf_token %}
             {{ form | crispy}}
             <input type="submit" value="Create" />
         </form>
     </div>  
+
 </div>
 
 {% endblock content %}
