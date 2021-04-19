@@ -1,10 +1,13 @@
 {% extends "index/index.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 {% load static %}
 
 <div style="min-height:85vh">
+
     <style>
         img {
         display: block;
@@ -32,10 +35,12 @@
 
     </figure>
 
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create" />
-    </form>
+    <div style="margin: 20px 60px 20px 60px;">
+        <form method="post">{% csrf_token %}
+            {{ form | crispy}}
+            <input type="submit" value="Create" />
+        </form>
+    </div>  
 </div>
 
 {% endblock content %}

@@ -4,6 +4,9 @@ from django import forms
 from django.contrib.auth.models import User
 import datetime
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+
 
 Cardio_Types = (
         ('Running', 'RUNNING'),
@@ -42,6 +45,22 @@ class CardioForm(forms.ModelForm):
     class Meta:
         model = Cardio
         fields = ['type', 'time', 'distance', 'date']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Fieldset(
+                'first arg is the legend of the fieldset',
+                'like_website',
+                'favorite_number',
+                'favorite_color',
+                'favorite_food',
+                'notes'
+            ),
+            ButtonHolder(
+                Submit('submit', 'Submit', css_class='button white')
+            )
+        )
 
 
 class UpperBody(models.Model):
