@@ -70,7 +70,8 @@
             <div class="progress" style="height: 30px">
                 <!-- TODO: Change "width" to correct pct -->
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="10" aria-valuemin="0" aria-valuemax="1000" style=width:var(--pct);>
+                    aria-valuenow='width:{{pct_to_next_level}}%' aria-valuemin="0" aria-valuemax="1000"
+                    style='width:{{pct_to_next_level}}%'>
                     {{pct_to_next_level}}%</div>
             </div>
         </div>
@@ -143,7 +144,8 @@
         {% else %}
         <div style="padding:10vw">
             <h2>Log Into Your Personal Exercise Gamification Dashboard!</h1>
-                <a class="btn btn-primary" role="button" href="{% provider_login_url 'google' %}">Login With Google</a>
+                <a class="btn btn-primary" role="button" href="{% provider_login_url 'google' %}">Login With
+                    Google</a>
         </div>
         {% endif %}
 
