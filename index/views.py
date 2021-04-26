@@ -55,24 +55,28 @@ def IndexView(request):
             place api_key in place of appid ="your_api_key_here "  '''
   
         # source contain JSON data from API
-  
-        print("foo")
-        source = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=9e6149bb94b5fc22796dfe758638c877').read()
-        print("bar")
-  
+        source = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=9e6149bb94b5fc22796dfe758638c877').read()
+        
         # converting JSON data to a dictionary
         list_of_data = json.loads(source)
 
         print(list_of_data)
+        isBadWeather = None
+        if (str(list_of_data['weather'][0]['main']) == ('Rain' or 'Snow' or 'Extreme')):
+            isBadWeather = True
+
+        if(isBadWeather):
+            print("BAD WEATHER YIKES")
   
         # data for variable list_of_data
         data = {
             "country_code": str(list_of_data['sys']['country']),
             "coordinate": str(list_of_data['coord']['lon']) + ' '
                         + str(list_of_data['coord']['lat']),
-            "temp": str(list_of_data['main']['temp']) + 'k',
+            "temp": str(list_of_data['main']['temp']) + ' \N{DEGREE SIGN}F',
             "pressure": str(list_of_data['main']['pressure']),
             "humidity": str(list_of_data['main']['humidity']),
+            "rain": str(list_of_data['weather'][0]['main']),
         }
         print(data)
     else:
