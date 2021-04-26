@@ -61,7 +61,7 @@ def IndexView(request):
         elif(str(list_of_data['weather'][0]['main']) == ('Extreme')):
             precipitation = "Extreme weather detected in Charlottesville! For your safety, do not exercise outside!"
         else:
-            precipitation = "No precipitation detected in Charlottesville."
+            precipitation = "No precipitation detected."
 
             
         total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
@@ -77,7 +77,14 @@ def IndexView(request):
             'curr_level': curr_level,
             'pts_to_next_level': get_pts_to_next(curr_level),
             'pct_to_next_level': get_pct_to_next(total_points, curr_level),
+            'weather': str(list_of_data['weather'][0]['main']),
             'precipitation': precipitation,
+            'temp': str(list_of_data['main']['temp']) + ' \N{DEGREE SIGN}F',
+            'pressure': str(list_of_data['main']['pressure']),
+            'humidity': str(list_of_data['main']['humidity']) + '%',
+            'wind': str(list_of_data['wind']['speed']) + ' mph',
+
+
         }
 
     # if request.method == 'POST':
