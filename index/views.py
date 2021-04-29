@@ -7,6 +7,12 @@ from friendship.models import Friend, Follow, Block, FriendshipRequest
 import operator
 from functools import cmp_to_key
 from .models import *
+from django.shortcuts import render
+# import json to load json data to python dictionary
+import json
+# urllib.request to make a request to api
+import urllib.request
+  
 
 mult_vals = {
     'Running': 3,
@@ -26,8 +32,38 @@ mult_vals = {
 }
 
 def IndexView(request):
+    weather_multipler = 1
     context = {}
     if request.user.is_authenticated:
+
+        # change city to test precipitation feature
+        city = 'Charlottesville'
+
+        # source contain JSON data from API 
+        source = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=9e6149bb94b5fc22796dfe758638c877').read()
+        
+        # converting JSON data to a dictionary
+        list_of_data = json.loads(source)
+
+        isBadWeather = None
+        if (str(list_of_data['weather'][0]['main']) == ('Rain' or 'Snow' or 'Extreme')):
+            isBadWeather = True
+
+        if isBadWeather:
+            weather_multipler = 1.5
+
+        print("OG weather mult: ", weather_multipler)
+        precipitation = ""
+        if(str(list_of_data['weather'][0]['main']) == ('Rain')):
+            precipitation = "Rain detected in Charlottesville! You'll receive bonus points for running or biking today!"
+        elif(str(list_of_data['weather'][0]['main']) == ('Snow')):
+            precipitation = "Snow detected in Charlottesville! You'll receive bonus points for running or biking today!"
+        elif(str(list_of_data['weather'][0]['main']) == ('Extreme')):
+            precipitation = "Extreme weather detected in Charlottesville! For your safety, do not exercise outside!"
+        else:
+            precipitation = "No precipitation detected."
+
+            
         total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
         curr_level = get_level(total_points)
         context = {
@@ -41,8 +77,57 @@ def IndexView(request):
             'curr_level': curr_level,
             'pts_to_next_level': get_pts_to_next(curr_level),
             'pct_to_next_level': get_pct_to_next(total_points, curr_level),
+            'weather': str(list_of_data['weather'][0]['main']),
+            'precipitation': precipitation,
+            'temp': str(list_of_data['main']['temp']) + ' \N{DEGREE SIGN}F',
+            'pressure': str(list_of_data['main']['pressure']),
+            'humidity': str(list_of_data['main']['humidity']) + '%',
+            'wind': str(list_of_data['wind']['speed']) + ' mph',
+
+
         }
+
+    # if request.method == 'POST':
+    #     city = request.POST['city']
+    #     ''' api key might be expired use your own api_key
+    #         place api_key in place of appid ="your_api_key_here "  '''
+  
+    #     # source contain JSON data from API 
+    #     source = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=9e6149bb94b5fc22796dfe758638c877').read()
         
+    #     # converting JSON data to a dictionary
+    #     list_of_data = json.loads(source)
+
+    #     print(list_of_data)
+    #     isBadWeather = None
+    #     if (str(list_of_data['weather'][0]['main']) == ('Rain' or 'Snow' or 'Extreme')):
+    #         isBadWeather = True
+
+    #     precipitation = ""
+    #     if(str(list_of_data['weather'][0]['main']) == ('Rain')):
+    #         precipitation = "Rain detected in Charlottesville! You'll receive bonus points for running or biking today!"
+    #     elif(str(list_of_data['weather'][0]['main']) == ('Snow')):
+    #         precipitation = "Snow detected in Charlottesville! You'll receive bonus points for running or biking today!"
+    #     elif(str(list_of_data['weather'][0]['main']) == ('Extreme')):
+    #         precipitation = "Extreme weather detected in Charlottesville! For your safety, do not exercise outside!"
+    #     else:
+    #         precipitation = "No precipitation detected in Charlottesville."
+  
+    #     # data for variable list_of_data
+    #     data = {
+    #         "country_code": str(list_of_data['sys']['country']),
+    #         "coordinate": str(list_of_data['coord']['lon']) + ' '
+    #                     + str(list_of_data['coord']['lat']),
+    #         "temp": str(list_of_data['main']['temp']) + ' \N{DEGREE SIGN}F',
+    #         "pressure": str(list_of_data['main']['pressure']),
+    #         "humidity": str(list_of_data['main']['humidity']),
+    #         "precipitation": precipitation,
+    #     }
+    #     print(data)
+    # else:
+    #     data ={}
+    # 
+    # context.update(data)
     
     return render(request, 'index/index.html', context)
 
