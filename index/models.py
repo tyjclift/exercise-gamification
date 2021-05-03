@@ -100,7 +100,7 @@ class LowerBodyForm(forms.ModelForm):
 
 
 class FriendRequest(models.Model):
-    username = models.CharField(max_length=25)
+    email = models.CharField(max_length=40)
     current_user = models.ForeignKey(
         User,
         null=True,
@@ -111,4 +111,4 @@ class FriendRequest(models.Model):
 class FriendRequestForm(forms.ModelForm):
     class Meta:
         model = FriendRequest
-        fields = ['username']
+        fields = ['email']
