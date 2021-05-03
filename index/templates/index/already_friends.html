@@ -1,0 +1,10 @@
+{% extends "index/index.html" %}
+{% load friendshiptags %}
+{% block content %}
+
+<div style="min-height:85vh">
+    <p>You are already friends with {{requested_username}}! It may take a second to process, but you should see them on your social page! </p>
+    <a href="{% url 'social' %}">Return to Social Page</a>
+</div>
+
+{% endblock content %}
