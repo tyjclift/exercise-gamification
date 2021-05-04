@@ -4,6 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block, FriendshipRequest
+from friendship.exceptions import AlreadyExistsError
 import operator
 from functools import cmp_to_key
 from .models import *
@@ -203,12 +204,12 @@ def SocialView(request):
         if requested_username in usernames and requested_username!=request.user.username:
             other_user = User.objects.get(username=requested_username)
             try:
-	            Friend.objects.add_friend(
-	                request.user,  # The sender
-	                other_user,  # The recipient
-	                message='Hi! I would like to add you')
-	            ctx = {
-	                'requested_username': requested_username,}
+            	Friend.objects.add_friend(
+            		request.user,  # The sender
+            		other_user,  # The recipient
+            		message='Hi! I would like to add you')
+            	ctx = {
+            		'requested_username': requested_username,}
             	return render(request, 'index/sent.html', context = ctx)
             except AlreadyExistsError as e:
             	pass
