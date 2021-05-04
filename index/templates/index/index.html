@@ -58,33 +58,36 @@
 
 {% block content %}
 
-<div style="min-height:85vh">
+<div style="min-height:75vh">
 
     <body>
         {% if user.is_authenticated %}
 
-        <div style="padding:3vw;">
-            <div class="d-flex justify-content-center" style="padding:3vh; font-weight: bold; font-size: larger;">Level
-                {{curr_level}} ({{total_points}} / {{pts_to_next_level}})</div>
+        <div class="card" style="background-color: #DBF3FA; ">
+            <div style="padding:3vw;">
+                <div class=" d-flex justify-content-center" style="padding:3vh; font-weight: bold; font-size: larger;">
+                    Level
+                    {{curr_level}} ({{total_points}} / {{pts_to_next_level}})</div>
 
-            <div class="progress" style="height: 30px">
-                <!-- TODO: Change "width" to correct pct -->
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow='width:{{pct_to_next_level}}%' aria-valuemin="0" aria-valuemax="1000"
-                    style='width:{{pct_to_next_level}}%'>
-                    {{pct_to_next_level}}%</div>
+                <div class="progress" style="height: 30px">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow='width:{{pct_to_next_level}}%' aria-valuemin="0" aria-valuemax="1000"
+                        style='width:{{pct_to_next_level}}%'>
+                        {{pct_to_next_level}}%</div>
+                </div>
+            </div>
+
+            <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-expanded="false">Select Workout Type</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'cardio' %}">Cardio</a>
+                    <a class="dropdown-item" href="{% url 'upper' %}">Upper</a>
+                    <a class="dropdown-item" href="{% url 'lower' %}">Lower</a>
+                </div>
             </div>
         </div>
 
-        <div class="dropdown d-flex justify-content-center" style="margin-bottom:10vh; padding:2vh">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-expanded="false">Select Workout Type</button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'cardio' %}">Cardio</a>
-                <a class="dropdown-item" href="{% url 'upper' %}">Upper</a>
-                <a class="dropdown-item" href="{% url 'lower' %}">Lower</a>
-            </div>
-        </div>
 
         <script>
             function get_index(list, index) {
@@ -92,51 +95,23 @@
             }
         </script>
 
-        <div style="margin:5vh;">
-            <h3 style="padding-bottom:8px;">Charlottesville Weather:</h3>
-            <h5>{{weather}}</h5>
-            <h5>Temperature: {{temp}}</h5>
-            <h5>Humidity: {{humidity}}</h5>
-            <h5>Wind: {{wind}}</h5>
-            <h5>{{precipitation}}</h5>
-        </div>
-        <!-- weather begins here -->
-        <!-- <nav class="row" style="background: green; color: white;">
-            <h1 class="col-md-3 text-center">weather</h1>
-        </nav>
-        <br />
-        <br />
-        <center class="row">
-            <form method="post" class="col-md-6 col-md-offset-3">
-            {% csrf_token %}
-            <div class="input-group">
-                <input type="text" class="form-control" name="city" placeholder="Search">
-                <div class="input-group-btn">
-                <button class="btn btn-default" type="submit">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-                </div>
-                <form>
-        </center> -->
-        <!-- <div class="row" style="margin:5vh;">
-            {% if country_code and coordinate and temp and pressure and humidity %}
-            <h3>{{precipitation}}</h3>
-            <div class="col-md-6 col-md-offset-3">
-            <h3>country code : {{country_code}}</h1>
-                <h5>coordinate : {{coordinate}}</h5>
-                <h5>temp : {{temp}}</h5>
-                <h5>pressure : {{pressure}} </h5>
-                <h5>humidity : {{humidity}}</h5>
+        <div class="jumbotron" style="margin:5vh;">
+            <h3>Charlottesville Weather</h3>
+            <div class="card-body">
+                <p class="card-text">{{weather}}</p>
+                <p>Temperature: {{temp}}</p>
+                <p>Humidity: {{humidity}}</p>
+                <p>Wind: {{wind}}</p>
+                <p>{{precipitation}}</p>
             </div>
-            {% endif %}
-        </div> -->
 
+        </div>
 
-        <div style="margin:5vh;">
-            <h3 style="padding-bottom:8px;">Cardio Log</h3>
+        <div class="jumbotron card-body" style="margin:5vh">
+            <h3 class="card-title">Cardio Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in cardio_query_list %}
-                <div class="card" style="width:12vw; margin:5px">
+                <div class="card" style="width:12vw; margin-top:10px; margin-right:10px">
                     <div class="card-body">
                         <h5 class=card-title>{{data.type}}</h5>
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
@@ -148,11 +123,12 @@
                 {% endfor %}
             </div>
         </div>
-        <div style="margin:5vh;">
-            <h3 style="padding-bottom:8px;">Upper Body Log</h3>
+
+        <div class="jumbotron card-body" style="margin:5vh;">
+            <h3 class="card-title">Upper Body Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in upper_query_list %}
-                <div class="card" style="width:12vw; margin:3px">
+                <div class="card" style="width:12vw; margin-top:10px; margin-right:10px">
                     <div class="card-body">
                         <h5 class=card-title>{{data.type}}</h5>
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
@@ -164,11 +140,12 @@
                 {% endfor %}
             </div>
         </div>
-        <div style="margin:5vh;">
-            <h3 style="padding-bottom:8px;">Lower Log</h3>
+
+        <div class="jumbotron card-body" style="margin:5vh;">
+            <h3 class="card-title">Lower Log</h3>
             <div class="d-flex flex-wrap">
                 {% for data in lower_query_list %}
-                <div class="card" style="width:12vw; margin:3px">
+                <div class="card" style="width:12vw; margin-top:10px; margin-right:10px">
                     <div class="card-body">
                         <h5 class=card-title>{{data.type}}</h5>
                         <p class="card-subtitle mb-2 text-muted">Date: {{data.date}}</p>
@@ -182,11 +159,19 @@
         </div>
 
         {% else %}
-        <div style="padding:10vw">
-            <h2>Log Into Your Personal Exercise Gamification Dashboard!</h1>
+        <div class="jumbotron" style="margin-left:10vw;margin-right:10vw;margin-top:10vh;">
+            <h1 class="display-4">Welcome to Exercise Gamification!</h1>
+            <p class="lead">Get started on your journey to beating your friends by earning points and leveling up as
+                you
+                record your workouts.</p>
+            <hr class="my-4">
+            <p>Log into your personal exercise gamification dashboard!</p>
+            <p class="lead">
                 <a class="btn btn-primary" role="button" href="{% provider_login_url 'google' %}">Login With
                     Google</a>
+            </p>
         </div>
+
         {% endif %}
 
     </body>
