@@ -211,7 +211,7 @@ def SocialView(request):
             	ctx = {
             		'requested_username': requested_username,}
             	return render(request, 'index/sent.html', context = ctx)
-            except AlreadyFriendsError as e:
+            except (AlreadyFriendsError, AlreadyExistsError) as e:
             	pass
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
