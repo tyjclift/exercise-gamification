@@ -192,6 +192,8 @@ def SocialView(request):
                                                             LowerBody.objects.filter(current_user=request.user),
                                                             Cardio.objects.filter(current_user=request.user))
     friends_ordered_by_points = sorted(friends_points.items(), key=operator.itemgetter(1), reverse=True)
+
+    error_message = ""
     if form.is_valid():
         form_user = form.save(commit=False)
         form_user.current_user = request.user
@@ -211,8 +213,12 @@ def SocialView(request):
             	ctx = {
             		'requested_username': requested_username,}
             	return render(request, 'index/sent.html', context = ctx)
-            except (AlreadyFriendsError, AlreadyExistsError) as e:
-            	pass
+            except ValidationError as e:
+            	error_message = "Sorry, a user cannot be friends with themselves"
+            except AlreadyFriendsError as e:
+            	error_message = "You are already friends with this person!"
+            except AlreadyExistsError as e:
+            	error_message = "You have already sent a friend request to this person!"
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
             if btn in request.POST.keys():
@@ -254,7 +260,8 @@ def SocialView(request):
             'sent_requests': sent_requests,
             'pending_requests':Friend.objects.unrejected_requests(user=request.user),
             'has_rejected':Friend.objects.rejected_requests(user=request.user),
-            'friends_lb': friends_ordered_by_points}
+            'friends_lb': friends_ordered_by_points,
+            'error_message': error_message}
     return render(request, 'index/social.html', context=ctx1)
 
 def comparator(user_1, user_2):
