@@ -10,7 +10,9 @@
             <h3 class="card-header">Friends</h3>
             <div style="margin:2vh">
                 <!-- {% if friends_exist %} -->
-                <div class="card-body">{% friends request.user %}</div>
+                <div class="card-body">
+                    <p>{% friends request.user %}</p>
+                </div>
 
                 <!-- {% else %}
                 <div>No friends yet .-.</div>
