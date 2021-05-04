@@ -16,6 +16,8 @@ def friends(user):
     """
     Simple tag to grab all friends
     """
+    if (Friend.objects.friends(user))=={}:
+        return False
     return {"friends": Friend.objects.friends(user)}
 
 

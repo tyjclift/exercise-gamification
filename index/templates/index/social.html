@@ -9,7 +9,7 @@
         <div class="card" style="width:80vw; margin-top:3vh">
             <h3 class="card-header">Friends</h3>
             <div style="margin:2vh">
-                {% if data in friends %}
+                {% if friends_exist %}
                 <div class="card-body">{% friends request.user %}</div>
 
                 {% else %}
@@ -63,7 +63,7 @@
                 <div class="d-flex flex-wrap">
                     {% if sent_requests %}
                     {% for data in sent_requests %}
-                    <div class="card" style="width:12vw; margin:3px;">
+                    <div class="card" style="width:12vw; margin:10px;">
                         <div class="card-body">
                             <h5 class=card-title>{{data.to_user.username}}</h5>
                             <p class="card-subtitle">Email: {{data.to_user.email}}</p>
