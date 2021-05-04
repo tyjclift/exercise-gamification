@@ -16,9 +16,9 @@ def friends(user):
     """
     Simple tag to grab all friends
     """
-    if not Friend.objects.friends(user):
-        out_str = "No friends yet .-."
-        return out_str
+    # if not Friend.objects.friends(user):
+    #     out_str = "No friends yet .-."
+    #     return out_str
     return {"friends": Friend.objects.friends(user)}
 
 

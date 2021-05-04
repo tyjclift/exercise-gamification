@@ -65,7 +65,6 @@ def IndexView(request):
             
         total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
         curr_level = get_level(total_points)
-        friends_exist_conditional = True if (len(Friend.objects.friends(request.user))>0) else False
         context = {
             'cardio_query_list': Cardio.objects.filter(current_user=request.user)[::-1],
             'upper_query_list': UpperBody.objects.filter(current_user=request.user)[::-1],
@@ -83,7 +82,6 @@ def IndexView(request):
             'pressure': str(list_of_data['main']['pressure']),
             'humidity': str(list_of_data['main']['humidity']) + '%',
             'wind': str(list_of_data['wind']['speed']) + ' mph',
-            'friends_exist': friends_exist_conditional,
         }
     
     return render(request, 'index/index.html', context)
