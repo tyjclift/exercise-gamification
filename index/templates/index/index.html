@@ -124,7 +124,7 @@
                         {% csrf_token %}
                         {% for data in cardio_query_list %}
                         <tr>
-                            <td>{{data.date}}</td>
+                            <td scope="row">{{data.date}}</td>
                             <td>{{ data.type }}</td>
                             <td>{{ data.time }}</td>
                             <td>{{ data.distance }}</td>
