@@ -12,7 +12,6 @@ from django.shortcuts import render
 import json
 # urllib.request to make a request to api
 import urllib.request
-  
 
 mult_vals = {
     'Running': 3,
@@ -66,7 +65,7 @@ def IndexView(request):
             
         total_points = get_total_points(UpperBody.objects.filter(current_user=request.user),LowerBody.objects.filter(current_user=request.user),Cardio.objects.filter(current_user=request.user))
         curr_level = get_level(total_points)
-        friends_exist_conditional = True if len(Friend.objects.friends(user))>0 else False
+        friends_exist_conditional = True if len(Friend.objects.friends(request.user))>0 else False
         context = {
             'cardio_query_list': Cardio.objects.filter(current_user=request.user)[::-1],
             'upper_query_list': UpperBody.objects.filter(current_user=request.user)[::-1],
