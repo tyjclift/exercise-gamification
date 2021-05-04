@@ -4,7 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block, FriendshipRequest
-from friendship.exceptions import AlreadyExistsError
+from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
 import operator
 from functools import cmp_to_key
 from .models import *
@@ -211,7 +211,7 @@ def SocialView(request):
             	ctx = {
             		'requested_username': requested_username,}
             	return render(request, 'index/sent.html', context = ctx)
-            except AlreadyExistsError as e:
+            except AlreadyFriendsError as e:
             	pass
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
