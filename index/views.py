@@ -202,13 +202,16 @@ def SocialView(request):
         requested_username = request.POST['username']
         if requested_username in usernames and requested_username!=request.user.username:
             other_user = User.objects.get(username=requested_username)
-            Friend.objects.add_friend(
-                request.user,  # The sender
-                other_user,  # The recipient
-                message='Hi! I would like to add you')
-            ctx = {
-                'requested_username': requested_username,}
-            return render(request, 'index/sent.html', context = ctx)
+            try:
+	            Friend.objects.add_friend(
+	                request.user,  # The sender
+	                other_user,  # The recipient
+	                message='Hi! I would like to add you')
+	            ctx = {
+	                'requested_username': requested_username,}
+            	return render(request, 'index/sent.html', context = ctx)
+            except AlreadyExistsError as e:
+            	pass
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
             if btn in request.POST.keys():
