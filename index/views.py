@@ -348,11 +348,14 @@ def get_level(xp):
         if(xp < ((500 * (level ** 2) - (500 * level))) * 10):
             return level - 1
             break
-    return 0
+    return 1000 # max level is 1000
 
 def get_pts_to_next(curr_level):
     level = curr_level + 1
-    return ((500 * (level ** 2) - (500 * level)) * 10)
+    if (level >= 1000):
+        return 0 # max level of 1000 has been reached
+    else:
+        return ((500 * (level ** 2) - (500 * level)) * 10)
 
 
 def get_pct_to_next(total_points, curr_level):
