@@ -44,7 +44,10 @@
             <h3 class="card-header">Add a Friend!</h3>
             <div class="card-body">
                 <form class="d-flex" style='padding-top:2vh' method="post">{% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="form-group">
+                        <label for="id_email">Email </label>
+                        <input type="text" name="email" maxlength="40" required id="id_time">
+                    </div>
                     <input type="submit" class="btn btn-primary btn-sm" style="max-height:30px; margin-left:10px;"
                         value="Add!">
                 </form>
