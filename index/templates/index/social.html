@@ -9,9 +9,17 @@
         <div class="card" style="width:80vw; margin-top:3vh">
             <h3 class="card-header">Friends</h3>
             <div style="margin:2vh">
+                {% for data in friends %}
                 <div>
-                    <p>{% friends request.user %}</p>
+                    <p>{{data.username }}</p>
+                    <form class="card-subtitle" method="post">{% csrf_token %}
+                                <input type="submit" value="Remove" name='remove_{{data.email}}' />
+                    </form>
                 </div>
+                {% endfor %}
+                {% if not friends %}
+                <p> You don't have any friends ._.</p>
+                {% endif %}
             </div>
         </div>
 
