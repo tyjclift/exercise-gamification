@@ -10,10 +10,10 @@
             <h3 class="card-header">Friends</h3>
             <div style="margin:2vh">
                 {% for data in friends %}
-                <div>
+                <div style="display:flex; justify-content:space-between">
                     <p>{{data.username }}</p>
                     <form class="card-subtitle" method="post">{% csrf_token %}
-                                <input type="submit" value="Remove" name='remove_{{data.email}}' />
+                        <input class="btn btn-danger" type="submit" value="Remove" name='remove_{{data.email}}' />
                     </form>
                 </div>
                 {% endfor %}
