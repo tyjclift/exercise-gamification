@@ -12,7 +12,7 @@
                 {% for data in friends %}
                 <div style="display:flex; justify-content:space-between">
                     <p>{{data.username }}</p>
-                    <form class="card-subtitle" method="post">{% csrf_token %}
+                    <form method="post">{% csrf_token %}
                         <input class="btn btn-danger" type="submit" value="Remove" name='remove_{{data.email}}' />
                     </form>
                 </div>
