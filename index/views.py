@@ -129,20 +129,26 @@ def LowerBodyView(request):
     return render(request, 'index/lowerbody_form.html', context)
 
 def SocialView(request):
+    print("Im in the social view")
     form = FriendRequestForm(request.POST or None)
     emails = []
     accept_btn_list = []
     reject_btn_list =[]
+    remove_btn_list =[]
     friends_points={}
+    friends_list=[]
     if len(User.objects.values())>0:
         for i in range(len(User.objects.values())):
-            print(User.objects.values()[i])
+            #print(User.objects.values()[i])
             emails.append((User.objects.values()[i]['email']))
 
     for my_request in Friend.objects.requests(user=request.user):
         accept_btn_list.append("accept_" + my_request.from_user.email)
         reject_btn_list.append("reject_" + my_request.from_user.email)
+
     for friend in Friend.objects.friends(request.user):
+        friends_list.append(friend)
+        remove_btn_list.append("remove_" + friend.email)
         upper = UpperBody.objects.filter(current_user=friend)
         lower = LowerBody.objects.filter(current_user=friend)
         cardio = Cardio.objects.filter(current_user=friend)
@@ -157,10 +163,10 @@ def SocialView(request):
         form_user.save()
         form.save()
     if request.method == 'POST' and 'email' in request.POST.keys():
-        print(request.POST)
-        print(Friend.objects.unrejected_requests(user=request.user))
+        #print(request.POST)
+        #print(Friend.objects.unrejected_requests(user=request.user))
         requested_email = request.POST['email']
-        print(requested_email)
+        #print(requested_email)
         if requested_email in emails and requested_email!=request.user.email:
             other_user = User.objects.get(email=requested_email)
             try:
@@ -205,6 +211,17 @@ def SocialView(request):
                     'friend': user.username,
                 }
                 return render(request, 'index/rejected.html', context=ctx)
+    if request.method == 'POST' and 'Remove' in request.POST.values():
+        for btn in remove_btn_list:
+            if btn in request.POST.keys():
+                email =btn[7:]
+                other_user = User.objects.get(email__exact=email)
+                print(other_user)
+                Friend.objects.remove_friend(request.user, other_user)
+                ctx = ctx = {
+                    'friend':other_user.username,
+                }
+                return render(request, 'index/removed.html', context=ctx)
     sent_requests = Friend.objects.sent_requests(user=request.user)
     for my_request in sent_requests[:]:
         has_rejected = Friend.objects.rejected_requests(user=my_request.to_user)
@@ -221,7 +238,10 @@ def SocialView(request):
             'sent_requests': sent_requests,
             'pending_requests':Friend.objects.unrejected_requests(user=request.user),
             'has_rejected':Friend.objects.rejected_requests(user=request.user),
-            'friends_lb': friends_ordered_by_points}
+            'friends_lb': friends_ordered_by_points,
+            'friends': friends_list,
+            }
+    print("Im at the end of social view about to render")
     return render(request, 'index/social.html', context=ctx1)
 
 def comparator(user_1, user_2):
