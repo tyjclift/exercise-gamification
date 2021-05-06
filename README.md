@@ -13,7 +13,11 @@ Hopefully this app motivates you to workout more and try and climb the leaderboa
 
 ## Features
 *Input workout
+
 *Weather Integration
+
 *Point system
+
 *Frends Integration
+
 *Leaderboard
