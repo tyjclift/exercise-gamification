@@ -163,7 +163,7 @@ def SocialView(request):
         form_user = form.save(commit=False)
         form_user.current_user = request.user
         form_user.save()
-        form.save()
+        #form.save()
         print("Finished form save")
     if request.method == 'POST' and 'email' in request.POST.keys():
         #print(request.POST)
