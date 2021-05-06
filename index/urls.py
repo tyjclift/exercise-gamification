@@ -4,6 +4,11 @@ from . import views
 
 #app_name = "index"
 
+# REFERENCES
+# Title: Django-allauth
+# URL: https://django-allauth.readthedocs.io/en/latest/installation.html
+# Software License: MIT License
+
 urlpatterns = [
     path("", views.IndexView, name="index"),
     path("accounts/", include("allauth.urls")),

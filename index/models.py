@@ -7,6 +7,9 @@ import datetime
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
+# Title: Django
+# URL: https://docs.djangoproject.com/en/3.2/
+# Software License: 3-clause BSD
 
 Cardio_Types = (
         ('Running', 'RUNNING'),

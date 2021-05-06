@@ -20,6 +20,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# REFERENCES
+# Title: Django-allauth
+# URL: https://django-allauth.readthedocs.io/en/latest/installation.html
+# Software License: MIT License
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,10 +78,16 @@ TEMPLATE_DIRS = (
    BASE_DIR + '../index/templates',
 )
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# https://stackoverflow.com/questions/9383450/how-can-i-detect-herokus-environment
-# https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python
+# Sources:
+# REFERENCES
+# URL: https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# Software License: BSD
+# Title: StackOverFlow
+# URL: https://stackoverflow.com/questions/9383450/how-can-i-detect-herokus-environment
+# Software License: Creative Commons
+# Title: Heroku
+# URL: https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python
+
 import dj_database_url
 
 DATABASE_URL = os.environ.get('ON_HEROKU')
@@ -156,12 +167,18 @@ MEDIA_URL = '/media/'
 # Activate Django-Heroku
 django_heroku.settings(locals())
 
+# Title: Medium.com
+# URL: https://whizzoe.medium.com/in-5-mins-set-up-google-login-to-sign-up-users-on-django-e71d5c38f5d5
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 SITE_ID = 5
+
+# Title: Medium.com
+# URL: https://whizzoe.medium.com/in-5-mins-set-up-google-login-to-sign-up-users-on-django-e71d5c38f5d5
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

@@ -33,6 +33,9 @@ mult_vals = {
     'Deadlifts': 2.25,
 }
 
+# Title: Weather API
+# URL: http://Openweathermap.org/api
+# Software License: Custom
 def IndexView(request):
     weather_multipler = 1
     context = {}
@@ -89,7 +92,9 @@ def IndexView(request):
     
     return render(request, 'index/index.html', context)
 
-# https://stackoverflow.com/questions/22739701/django-save-modelform
+# Title: StackOverFlow
+# URL: https://stackoverflow.com/questions/22739701/django-save-modelform
+# Software License: Creative Commons
 def CardioView(request):
     form = CardioForm(request.POST or None)
     if form.is_valid():
@@ -128,6 +133,11 @@ def LowerBodyView(request):
     context = {'form': form}
     return render(request, 'index/lowerbody_form.html', context)
 
+# Title: Django-Friendship
+# Author: Many
+# Code version: 1.9.1
+# URL: https://github.com/revsys/django-friendship
+# Software License: Custom
 def SocialView(request):
     print("Im in the social view")
     form = FriendRequestForm(request.POST or None)
