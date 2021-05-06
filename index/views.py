@@ -4,6 +4,8 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block, FriendshipRequest
+from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
+from django.core.exceptions import ValidationError
 import operator
 from functools import cmp_to_key
 from .models import *
@@ -12,6 +14,7 @@ from django.shortcuts import render
 import json
 # urllib.request to make a request to api
 import urllib.request
+from friendship.exceptions import *
 
 mult_vals = {
     'Running': 3,
@@ -69,9 +72,9 @@ def IndexView(request):
             'cardio_query_list': Cardio.objects.filter(current_user=request.user)[::-1],
             'upper_query_list': UpperBody.objects.filter(current_user=request.user)[::-1],
             'lower_query_list': LowerBody.objects.filter(current_user=request.user)[::-1],
-            'cardio_points': get_points_by_type(Cardio.objects.filter(current_user=request.user),"cardio")[::-1],
-            'upper_points': get_points_by_type(UpperBody.objects.filter(current_user=request.user), "upper")[::-1],
-            'lower_points': get_points_by_type(LowerBody.objects.filter(current_user=request.user), "lower")[::-1],
+            'cardio_points': get_points_by_type(Cardio.objects.filter(current_user=request.user)[::-1],"cardio"),
+            'upper_points': get_points_by_type(UpperBody.objects.filter(current_user=request.user)[::-1], "upper"),
+            'lower_points': get_points_by_type(LowerBody.objects.filter(current_user=request.user)[::-1], "lower"),
             'total_points': total_points,
             'curr_level': curr_level,
             'pts_to_next_level': get_pts_to_next(curr_level),
@@ -127,13 +130,15 @@ def LowerBodyView(request):
 
 def SocialView(request):
     form = FriendRequestForm(request.POST or None)
-    usernames = []
+    emails = []
     accept_btn_list = []
     reject_btn_list =[]
     friends_points={}
     if len(User.objects.values())>0:
         for i in range(len(User.objects.values())):
-            usernames.append((User.objects.values()[i]['username']))
+            print(User.objects.values()[i])
+            emails.append((User.objects.values()[i]['email']))
+
     for my_request in Friend.objects.requests(user=request.user):
         accept_btn_list.append("accept_" + my_request.from_user.email)
         reject_btn_list.append("reject_" + my_request.from_user.email)
@@ -151,18 +156,29 @@ def SocialView(request):
         form_user.current_user = request.user
         form_user.save()
         form.save()
-    if request.method == 'POST' and 'username' in request.POST.keys():
+    if request.method == 'POST' and 'email' in request.POST.keys():
         print(request.POST)
         print(Friend.objects.unrejected_requests(user=request.user))
-        requested_username = request.POST['username']
-        if requested_username in usernames and requested_username!=request.user.username:
-            other_user = User.objects.get(username=requested_username)
-            Friend.objects.add_friend(
-                request.user,  # The sender
-                other_user,  # The recipient
-                message='Hi! I would like to add you')
-            ctx = {
-                'requested_username': requested_username,}
+        requested_email = request.POST['email']
+        print(requested_email)
+        if requested_email in emails and requested_email!=request.user.email:
+            other_user = User.objects.get(email=requested_email)
+            try:
+                Friend.objects.add_friend(
+                    request.user,  # The sender
+                    other_user,  # The recipient
+                    message='Hi! I would like to add you')
+                ctx = {
+                    'requested_username': other_user.username,}
+            except AlreadyExistsError:
+                ctx = {
+                    'requested_username': other_user.username, }
+                return render(request, 'index/already_sent.html', context=ctx)
+            except AlreadyFriendsError:
+                ctx = {
+                    'requested_username': other_user.username, }
+                return render(request, 'index/already_friends.html', context=ctx)
+
             return render(request, 'index/sent.html', context = ctx)
     if request.method == 'POST' and 'Accept' in request.POST.values():
         for btn in accept_btn_list:
@@ -288,11 +304,14 @@ def get_level(xp):
         if(xp < ((500 * (level ** 2) - (500 * level))) * 10):
             return level - 1
             break
-    return 0
+    return 1000 # max level is 1000
 
 def get_pts_to_next(curr_level):
     level = curr_level + 1
-    return ((500 * (level ** 2) - (500 * level)) * 10)
+    if (level >= 1000):
+        return 0 # max level of 1000 has been reached
+    else:
+        return ((500 * (level ** 2) - (500 * level)) * 10)
 
 
 def get_pct_to_next(total_points, curr_level):
