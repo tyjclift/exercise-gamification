@@ -12,8 +12,8 @@ Finally, the social aspect of our app allows users to compare their point with t
 Hopefully this app motivates you to workout more and try and climb the leaderboard!
 
 ## Features
-*Input workout*
-*Weather Integration*
-*Point system*
-*Frends Integration*
-*Leaderboard*
+*Input workout
+*Weather Integration
+*Point system
+*Frends Integration
+*Leaderboard
