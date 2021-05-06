@@ -200,6 +200,11 @@ def SocialView(request):
                 ctx = {
                     'friend':user.username,
                 }
+                for friend in Friend.objects.friends(request.user):
+                    print(friend.username)
+                for friend2 in Friend.objects.friends(user):
+                    print(friend2.username)
+                print(Friend.objects.unrejected_requests(user=request.user))
                 return render(request, 'index/accepted.html', context=ctx)
     if request.method == 'POST' and 'Reject' in request.POST.values():
         for btn in reject_btn_list:
@@ -213,6 +218,7 @@ def SocialView(request):
                 ctx = {
                     'friend': user.username,
                 }
+
                 return render(request, 'index/rejected.html', context=ctx)
     if request.method == 'POST' and 'Remove' in request.POST.values():
         for btn in remove_btn_list:
