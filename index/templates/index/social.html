@@ -11,9 +11,9 @@
             <div style="margin:2vh">
                 {% for data in friends %}
                 <div style="display:flex; justify-content:space-between">
-                    <p style="padding-top:5px">{{data.username }}</p>
+                    <p>{{data.username }}</p>
                     <form method="post">{% csrf_token %}
-                        <input class="btn btn-danger btn-small" type="submit" value="Remove"
+                        <input class="btn btn-danger btn-sm" type="submit" value="Remove"
                             name='remove_{{data.email}}' />
                     </form>
                 </div>
