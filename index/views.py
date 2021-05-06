@@ -137,6 +137,7 @@ def SocialView(request):
     remove_btn_list =[]
     friends_points={}
     friends_list=[]
+    friends_usernames = []
     if len(User.objects.values())>0:
         for i in range(len(User.objects.values())):
             #print(User.objects.values()[i])
@@ -147,6 +148,7 @@ def SocialView(request):
         reject_btn_list.append("reject_" + my_request.from_user.email)
 
     for friend in Friend.objects.friends(request.user):
+        friends_usernames.append(friend.username)
         friends_list.append(friend)
         remove_btn_list.append("remove_" + friend.email)
         upper = UpperBody.objects.filter(current_user=friend)
@@ -162,6 +164,7 @@ def SocialView(request):
         form_user.current_user = request.user
         form_user.save()
         form.save()
+        print("Finished form save")
     if request.method == 'POST' and 'email' in request.POST.keys():
         #print(request.POST)
         #print(Friend.objects.unrejected_requests(user=request.user))
@@ -241,6 +244,11 @@ def SocialView(request):
             'friends_lb': friends_ordered_by_points,
             'friends': friends_list,
             }
+    
+    print("Your Friends usernames:", friends_usernames)
+    print("Your Friend Objects:", friends_list)
+    print("Pending requests:", Friend.objects.unrejected_requests(user=request.user))
+    print("Sent requests:", sent_requests)
     print("Im at the end of social view about to render")
     return render(request, 'index/social.html', context=ctx1)
 
