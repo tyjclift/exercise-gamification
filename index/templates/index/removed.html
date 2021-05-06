@@ -1,0 +1,10 @@
+{% extends "index/index.html" %}
+{% load friendshiptags %}
+{% block content %}
+
+<div style="min-height:85vh">
+    <p>Removed {{friend}} from your friends list.  Your social page should update shortly. </p>
+    <a href="{% url 'social' %}">Return to Social Page</a>
+</div>
+
+{% endblock content %}
