@@ -225,30 +225,30 @@ def SocialView(request):
                     'friend':other_user.username,
                 }
                 return render(request, 'index/removed.html', context=ctx)
-    sent_requests = Friend.objects.sent_requests(user=request.user)
-    for my_request in sent_requests[:]:
+    for my_request in Friend.objects.sent_requests(user=request.user):
         has_rejected = Friend.objects.rejected_requests(user=my_request.to_user)
         for rejects in has_rejected:
             if rejects.from_user == request.user:
-                sent_requests.remove(my_request)
+                #sent_requests.remove(my_request)
                 print("Friendship request from "+ request.user.username + "was rejected by "+ my_request.to_user.email)
                 mean_user = User.objects.get(email__exact=my_request.to_user.email)
                 FriendshipRequest.objects.filter(
                     from_user=request.user, to_user=mean_user
                 ).delete()
+    #sent_requests = Friend.objects.sent_requests(user=request.user)
 
     ctx1 = {'form': form,
-            'sent_requests': sent_requests,
+            'sent_requests': Friend.objects.sent_requests(user=request.user),
             'pending_requests':Friend.objects.unrejected_requests(user=request.user),
             'has_rejected':Friend.objects.rejected_requests(user=request.user),
             'friends_lb': friends_ordered_by_points,
             'friends': friends_list,
             }
-    
+
     print("Your Friends usernames:", friends_usernames)
     print("Your Friend Objects:", friends_list)
     print("Pending requests:", Friend.objects.unrejected_requests(user=request.user))
-    print("Sent requests:", sent_requests)
+    print("Sent requests:", Friend.objects.sent_requests(user=request.user))
     print("Im at the end of social view about to render")
     return render(request, 'index/social.html', context=ctx1)
 
