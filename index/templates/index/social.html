@@ -10,10 +10,11 @@
             <h3 class="card-header">Friends</h3>
             <div style="margin:2vh">
                 {% for data in friends %}
-                <div>
-                    <p>{{data.username }}</p>
-                    <form class="card-subtitle" method="post">{% csrf_token %}
-                                <input type="submit" value="Remove" name='remove_{{data.email}}' />
+                <div style="display:flex; justify-content:space-between">
+                    <p style="padding-top:5px">{{data.username }}</p>
+                    <form method="post">{% csrf_token %}
+                        <input class="btn btn-danger btn-sm" type="submit" value="Remove"
+                            name='remove_{{data.email}}' />
                     </form>
                 </div>
                 {% endfor %}
@@ -52,7 +53,10 @@
             <h3 class="card-header">Add a Friend!</h3>
             <div class="card-body">
                 <form class="d-flex" style='padding-top:2vh' method="post">{% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="form-group">
+                        <label for="id_email">Email </label>
+                        <input type="text" name="email" maxlength="40" required id="id_time">
+                    </div>
                     <input type="submit" class="btn btn-primary btn-sm" style="max-height:30px; margin-left:10px;"
                         value="Add!">
                 </form>
