@@ -1,4 +1,6 @@
-## UVA CS3240 Project. App can be found at https://uva-cs3240-a14.herokuapp.com/
+## UVA CS3240 Project. 
+
+App can be found at https://uva-cs3240-a14.herokuapp.com/
 
 ## Usage Guide
 First, when you go to our website there will be a welcome landing page that allows you to login with your Google account. This will set up your personal account for you to seamlessly access your information.
